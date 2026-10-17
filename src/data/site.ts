@@ -12,6 +12,8 @@ export const site = {
     "Our deep relationships in Japan, Korea and China, with our presence in the United States, give us the advantage to bridge the gap efficiently between the seller, buyer, operator and charterer.",
   // In order of priority.
   services: ["Asset management", "Commercial management", "Chartering", "Turnkey services"],
+  // Anchors on the Services page, matching the order above.
+  serviceIds: ["asset-management", "commercial-management", "chartering", "turnkey-services"],
   parties: ["Seller", "Buyer", "Operator", "Charterer"],
   relationshipRegions: ["Japan", "Korea", "China"],
   presence: "United States",
@@ -22,6 +24,7 @@ export const site = {
 };
 
 export const nav = [
-  { href: "/#what-we-do", label: "What we do" },
   { href: "/about/", label: "About" },
+  { href: "/services/", label: "Services" },
+  { href: "/investors/", label: "Investors & Partners" },
 ];

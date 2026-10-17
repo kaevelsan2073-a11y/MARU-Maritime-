@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
       <div class="site-footer__col">
         <h2>What we do</h2>
         <ul>
-          {site.services.map((s) => <li><a href="/#what-we-do">{s}</a></li>)}
+          {site.services.map((s, i) => <li><a href={`/services/#${site.serviceIds[i]}`}>{s}</a></li>)}
         </ul>
       </div>
       <div class="site-footer__col">

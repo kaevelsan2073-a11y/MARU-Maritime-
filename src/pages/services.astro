@@ -1,0 +1,248 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+
+const services = [
+  {
+    id: "asset-management",
+    icon: "asset",
+    kicker: "Throughout the life cycle of the ship",
+    title: "Asset Management",
+    intro:
+      "A ship is an investment as well as a working asset. We create opportunities in ship owning and manage vessels end to end: buying at the right price, financing sensibly, keeping the vessel in good condition and deciding when to sell.",
+    body: "Throughout, we report clearly on what the asset is worth, what it is earning and what it is costing.",
+    points: [
+      "Acquisition screening, vessel inspection and sale-and-purchase support",
+      "Valuation monitoring and independent valuation coordination",
+      "Financing and structuring: bank debt, leasing and joint ventures",
+      "Budgeting, operating-cost control and capital expenditure planning",
+      "Fleet strategy, renewal and divestment timing",
+      "Investor reporting, governance and SPV administration",
+    ],
+  },
+  {
+    id: "commercial-management",
+    icon: "commercial",
+    kicker: "Employment and earnings",
+    title: "Commercial Management",
+    intro:
+      "We take responsibility for how a ship earns: what employment it takes, how each voyage is run, and making sure the money actually comes in once the work is done.",
+    body: "We watch the market closely and measure ourselves against it. If a ship is underperforming, the owner hears it from us first, along with what we plan to do about it.",
+    points: [
+      "Employment strategy aligned with owner objectives and market outlook",
+      "Freight market research, voyage estimation and earnings forecasting",
+      "Counterparty due diligence, credit assessment and KYC",
+      "Post-fixture management: laytime, demurrage and claims handling",
+      "Hire and freight invoicing, collection and reconciliation",
+      "Bunker planning and procurement coordination",
+      "Performance benchmarking and commercial reporting",
+    ],
+  },
+  {
+    id: "chartering",
+    icon: "chartering",
+    kicker: "Connecting owners and charterers",
+    title: "Chartering",
+    intro:
+      "We find work for ships. That means talking to brokers and charterers, weighing the rate against the risk, and choosing business that suits the ship and the owner rather than just the highest number on the day.",
+    body: "The detail in a charter party matters. Speed and consumption warranties, trading limits, payment terms and off-hire clauses are where owners win or lose money, so we read every line.",
+    points: [
+      "Time charters, short and long term",
+      "Voyage charters and spot market employment",
+      "Contracts of affreightment (COAs)",
+      "Evaluation of pool participation and commercial partnerships",
+      "Fixture negotiation and charter party drafting and review",
+      "Broker network management and cargo sourcing",
+      "Period-versus-spot strategy through the freight cycle",
+    ],
+  },
+  {
+    id: "turnkey-services",
+    icon: "turnkey",
+    kicker: "One point of contact",
+    title: "Turnkey Services",
+    intro:
+      "Some owners would rather not deal with five different companies. We coordinate everything a ship needs, from technical management to insurance, working with specialist providers we have chosen carefully.",
+    body: "You get one number to call, and one team responsible if something goes wrong.",
+    points: [
+      "Technical management oversight and ship-manager selection",
+      "Crew management coordination",
+      "Insurance placement: hull and machinery, P&I and FD&D",
+      "Class, flag and regulatory compliance",
+      "Newbuilding, conversion and dry-dock supervision",
+      "Environmental compliance: EEXI, CII and EU ETS readiness",
+    ],
+  },
+];
+
+const engagement = [
+  { icon: "search", title: "Listen", text: "We start with what you own, what you want from it and how much risk you are comfortable with." },
+  { icon: "compass", title: "Plan", text: "We agree a commercial plan with you, with targets we can both measure." },
+  { icon: "turnkey", title: "Run", text: "We handle chartering, operations and suppliers day to day." },
+  { icon: "report", title: "Report", text: "You get regular, plain-English reports on earnings, costs and value." },
+];
+---
+
+<Base title="Services" description="Asset management, commercial management, chartering and turnkey services from Maru Maritime.">
+  <PageHero eyebrow="Services" title="What we do." lead={site.description}>
+    <nav class="jump" aria-label="Services on this page" data-reveal style="--delay:.24s">
+      {services.map((s) => (
+        <a href={`#${s.id}`}><Icon name={s.icon} />{s.title}</a>
+      ))}
+    </nav>
+  </PageHero>
+
+  {services.map((s, i) => (
+    <section id={s.id} class:list={["section", "service", i % 2 === 0 ? "section--deep" : "section--light"]}>
+      <div class:list={["container", "service__grid", { "service__grid--flip": i % 2 === 1 }]}>
+        <div class="service__copy" data-reveal>
+          <span class="service__num">{String(i + 1).padStart(2, "0")}</span>
+          <span class="eyebrow">{s.kicker}</span>
+          <h2 class="h2">{s.title}</h2>
+          <p class="lead">{s.intro}</p>
+          <p class="muted">{s.body}</p>
+        </div>
+        <div class="card service__card" data-reveal style="--delay:.1s">
+          <span class="icon-badge"><Icon name={s.icon} /></span>
+          <h3 class="service__card-title">What it includes</h3>
+          <ul class="check-list">
+            {s.points.map((pt) => <li>{pt}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--dark divider-top">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">How we engage</span>
+        <h2 class="h2">How working with us goes.</h2>
+        <p class="lead">The same four steps for every client, so you always know where things stand.</p>
+      </div>
+      <ol class="grid grid--4 engage">
+        {engagement.map((e, i) => (
+          <li class="card" data-reveal style={`--delay:${i * 0.08}s`}>
+            <span class="engage__step">Step {i + 1}</span>
+            <span class="icon-badge"><Icon name={e.icon} /></span>
+            <h3 class="h3">{e.title}</h3>
+            <p class="muted">{e.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand title="Discuss a mandate with us." text="Tell us about your vessels or your investment objectives, and we will show you how we would approach it." />
+</Base>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 44px;
+  }
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border: 1px solid var(--line-dark-strong);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+  }
+  .jump a :global(svg) {
+    width: 18px;
+    height: 18px;
+    color: var(--gold-400);
+  }
+  .jump a:hover {
+    border-color: var(--gold-400);
+    background: rgba(233, 200, 115, 0.06);
+    color: var(--gold-200);
+  }
+
+  .service__grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(40px, 7vw, 104px);
+    align-items: start;
+  }
+  .service__grid--flip .service__copy {
+    order: 2;
+  }
+  .service__num {
+    display: block;
+    margin-bottom: 18px;
+    font-family: var(--font-display);
+    font-size: clamp(64px, 7vw, 96px);
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(233, 200, 115, 0.45);
+  }
+  .section--light .service__num {
+    -webkit-text-stroke-color: rgba(165, 123, 43, 0.5);
+  }
+  .service__copy .h2 {
+    margin-bottom: 26px;
+  }
+  .section--light .service__copy .lead {
+    color: var(--text-on-light);
+  }
+  .service__card-title {
+    margin-bottom: 22px;
+    font-family: var(--font-brand);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-400);
+  }
+  .section--light .service__card-title {
+    color: var(--gold-600);
+  }
+  .service__card .check-list {
+    font-size: 16px;
+  }
+  .section--light .service__card .check-list {
+    color: var(--text-on-light);
+  }
+
+  .engage {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .engage__step {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    font-family: var(--font-brand);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-500);
+  }
+  .engage .h3 {
+    margin-bottom: 12px;
+  }
+  .engage .muted {
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .service__grid {
+      grid-template-columns: 1fr;
+    }
+    .service__grid--flip .service__copy {
+      order: 0;
+    }
+  }
+</style>

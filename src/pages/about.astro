@@ -3,7 +3,17 @@ import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import Bridge from "../components/Bridge.astro";
 import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
 import { site } from "../data/site";
+
+const values = [
+  { icon: "anchor", title: "Trust", text: "We earn confidence through integrity, discretion and doing exactly what we say we will do." },
+  { icon: "compass", title: "Excellence", text: "We hold our commercial and operational work to the highest professional standard." },
+  { icon: "scale", title: "Discipline", text: "We are rigorous with capital, risk and cost, especially when markets tempt otherwise." },
+  { icon: "doc", title: "Transparency", text: "Clear, timely and honest reporting, so our partners always see what we see." },
+  { icon: "handshake", title: "Partnership", text: "Our interests are aligned with those of the owners, investors and charterers we serve." },
+];
+
 ---
 
 <Base title="About" description={site.description}>
@@ -23,8 +33,48 @@ import { site } from "../data/site";
     </div>
   </section>
 
-  <!-- Relationships and presence -->
+  <!-- Mission / Vision -->
   <section class="section section--deep">
+    <div class="container grid grid--2 mv">
+      <article class="card mv__card" data-reveal>
+        <span class="eyebrow">Our mission</span>
+        <p class="mv__statement">
+          To get the best possible result from every ship we look after, and to be straight with the people who own
+          them about how it is going.
+        </p>
+      </article>
+      <article class="card mv__card" data-reveal style="--delay:.1s">
+        <span class="eyebrow">Our vision</span>
+        <p class="mv__statement">
+          To be the firm owners and investors call first, because they know we will be careful with their money and
+          honest about the market.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section section--dark divider-top">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Our values</span>
+        <h2 class="h2">What we stand for.</h2>
+        <p class="lead">Five things we expect of ourselves, whoever the client is and whatever the market is doing.</p>
+      </div>
+      <div class="values">
+        {values.map((v, i) => (
+          <article class="values__item" data-reveal style={`--delay:${i * 0.07}s`}>
+            <span class="icon-badge"><Icon name={v.icon} /></span>
+            <h3 class="h3">{v.title}</h3>
+            <p class="muted">{v.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Relationships and presence -->
+  <section class="section section--deep divider-top">
     <div class="container">
       <div class="section-head" data-reveal>
         <h2 class="h2">Relationships and presence</h2>
@@ -67,6 +117,35 @@ import { site } from "../data/site";
     border-radius: 50%;
     box-shadow: 0 30px 60px rgba(6, 15, 30, 0.25);
   }
+  .mv__card {
+    padding: clamp(36px, 4vw, 56px);
+  }
+  .mv__statement {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.6vw, 34px);
+    line-height: 1.3;
+  }
+
+  .values {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid var(--line-dark);
+  }
+  .values__item {
+    padding: 40px 28px 8px 0;
+  }
+  .values__item + .values__item {
+    padding-left: 28px;
+    border-left: 1px solid var(--line-dark);
+  }
+  .values__item .h3 {
+    margin-bottom: 12px;
+  }
+  .values__item .muted {
+    font-size: 15.5px;
+  }
+
   .tagline {
     text-align: center;
   }
@@ -75,6 +154,22 @@ import { site } from "../data/site";
     font-family: var(--font-display);
     font-size: clamp(36px, 4.6vw, 60px);
     line-height: 1.15;
+  }
+  @media (max-width: 1080px) {
+    .values {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .values__item,
+    .values__item + .values__item {
+      padding: 32px 24px 8px 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line-dark);
+    }
+  }
+  @media (max-width: 560px) {
+    .values {
+      grid-template-columns: 1fr;
+    }
   }
   @media (max-width: 860px) {
     .about {
