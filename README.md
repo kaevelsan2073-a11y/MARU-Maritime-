@@ -41,9 +41,9 @@ email to ships@marumaritime.com.
 All photos are CC0 / public domain from Wikimedia Commons (no attribution required). Ship names were cropped
 or painted out so no third-party vessel appears to belong to Maru Maritime.
 
-- `public/images/hero.jpg`: "Bulk carrier Nyon" (Wikimedia Commons, CC0), bow name removed
-- `public/images/detail.jpg`: "Equinox Dream. Bulk Carrier", Bernard Spragg (Wikimedia Commons, CC0), cropped
-- `public/images/band.jpg`: "PAIWAN WISDOM. Bulk Carrier" (Wikimedia Commons, CC0), cropped
+- `public/images/hero.jpg`: "Crude Oil Tanker in Port Arthur, Texas" (Wikimedia Commons, CC0), bow name and funnel logo removed
+- `public/images/detail.jpg`: "Chemical tanker Ternholm at Skarvikshamnen 1" (Wikimedia Commons, CC0), cropped to exclude name and logos
+- `public/images/band.jpg`: "Chemical tanker Nordic Henriette on Nieuwe Waterweg, Rotterdam" (Wikimedia Commons, CC0), cropped to exclude name and logo
 
 Replace these with Maru Maritime's own photography when available.
 
