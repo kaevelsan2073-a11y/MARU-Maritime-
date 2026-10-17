@@ -49,7 +49,7 @@ Replace these with Maru Maritime's own photography when available.
 
 ## Hosting (GitHub Pages + Porkbun)
 
-The site deploys automatically via `.github/workflows/deploy.yml` on every push. `public/CNAME` sets the
+The site deploys automatically via `.github/workflows/deploy.yml` on every push to `main`. `public/CNAME` sets the
 custom domain to `marumaritime.com`.
 
 One-time setup:
