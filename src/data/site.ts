@@ -6,9 +6,8 @@ export const site = {
   description:
     "Maru Maritime is a maritime asset management and turnkey maritime services platform with a primary focus on the commercial management and chartering of ships.",
   founder: "Jatinder Sandhu",
-  // PLACEHOLDER contact details: confirm domain, mailboxes and office address.
-  email: "info@marumaritime.com",
-  charteringEmail: "chartering@marumaritime.com",
+  email: "ships@marumaritime.com",
+  // PLACEHOLDER: add phone number and office address when confirmed.
   phone: "",
   office: "",
 };

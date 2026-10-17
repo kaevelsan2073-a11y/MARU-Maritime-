@@ -6,7 +6,7 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="site-footer__top">
       <div class="site-footer__brand">
-        <img src="/brand/logo-seal.svg" alt="Maru Maritime seal" width="132" height="132" loading="lazy" />
+        <img src="/brand/logo-seal.svg" alt="Maru Maritime seal" width="168" height="168" loading="lazy" />
         <p>{site.description}</p>
       </div>
       <div class="site-footer__col">
@@ -29,7 +29,6 @@ const year = new Date().getFullYear();
         <h2>Get in touch</h2>
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><a href={`mailto:${site.charteringEmail}`}>{site.charteringEmail}</a></li>
           <li class="muted">{site.office || "Office address to be announced"}</li>
         </ul>
       </div>
@@ -57,8 +56,8 @@ const year = new Date().getFullYear();
     border-bottom: 1px solid var(--line-dark);
   }
   .site-footer__brand img {
-    width: 132px;
-    height: 132px;
+    width: 168px;
+    height: 168px;
     margin-bottom: 24px;
   }
   .site-footer__brand p {
