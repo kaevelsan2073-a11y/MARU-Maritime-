@@ -1,63 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
+import Bridge from "../components/Bridge.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
-import Vessel from "../components/Vessel.astro";
 import { site } from "../data/site";
-
-const services = [
-  {
-    title: "Commercial management",
-    text: "We decide how a ship earns: what employment it takes, how each voyage is run, and making sure hire and freight are collected in full.",
-    href: "/services/#commercial-management",
-  },
-  {
-    title: "Chartering",
-    text: "Time charters, voyage charters and COAs, negotiated line by line with charterers we have checked out properly.",
-    href: "/services/#chartering",
-  },
-  {
-    title: "Asset management",
-    text: "Buying at the right price, financing sensibly, keeping the vessel in good order and knowing when to sell.",
-    href: "/services/#asset-management",
-  },
-  {
-    title: "Turnkey services",
-    text: "Technical management, crewing, insurance and compliance, coordinated by us so the owner has one point of contact.",
-    href: "/services/#turnkey-services",
-  },
-];
-
-const principles = [
-  {
-    title: "Treat every ship as an investment",
-    text: "Someone's capital is tied up in that hull. We look after its condition, its value and its reputation as carefully as its earnings.",
-  },
-  {
-    title: "Run a tight operation",
-    text: "Good voyages are planned properly, cost what they should and get paid on time. Small things, done every day, add up.",
-  },
-  {
-    title: "Think in years, not fixtures",
-    text: "Freight markets move in cycles. We make decisions with the owner's whole holding period in mind, not just the next charter.",
-  },
-];
-
-const lifecycle = [
-  ["Buy", "Finding the right vessel, inspecting it and negotiating the price."],
-  ["Finance", "Setting up the ownership structure and the right level of debt."],
-  ["Charter", "Securing employment that fits the market and the owner."],
-  ["Operate", "Running voyages, overseeing technical management and controlling costs."],
-  ["Report", "Monthly numbers on earnings, costs and value, in plain language."],
-  ["Sell", "Choosing the moment to exit, or renewing the fleet."],
-];
-
-const segments = [
-  { type: "bulk", title: "Dry bulk", text: "Iron ore, coal, grain and minor bulks." },
-  { type: "tanker", title: "Tankers", text: "Crude and refined products." },
-  { type: "container", title: "Containers", text: "Feeder and intermediate tonnage." },
-  { type: "offshore", title: "Offshore", text: "Support and project vessels." },
-] as const;
 ---
 
 <Base description={site.description}>
@@ -66,127 +12,56 @@ const segments = [
     <img class="hero__photo" src="/images/hero.jpg" alt="" fetchpriority="high" />
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="container hero__inner">
-      <p class="hero__kicker" data-reveal>Maritime asset management &middot; Commercial management &middot; Chartering</p>
-      <h1 class="display" data-reveal style="--delay:.08s">We look after ships as if they were our own.</h1>
-      <p class="lead" data-reveal style="--delay:.16s">
-        {site.name} is a maritime asset management company. Our main business is commercial management and
-        chartering: finding the right work for ships, running each voyage well and protecting their value for the
-        people who own them.
-      </p>
+      <p class="hero__kicker" data-reveal>{site.label}</p>
+      <h1 class="display" data-reveal style="--delay:.08s">End-to-end asset management across the life of the ship.</h1>
+      <p class="lead" data-reveal style="--delay:.16s">{site.description}</p>
       <div class="hero__actions" data-reveal style="--delay:.24s">
-        <a href="/services/" class="btn btn--gold">What we do <Icon name="arrow" /></a>
-        <a href="/contact/" class="btn btn--ghost">Talk to us</a>
+        <a href="#what-we-do" class="btn btn--gold">What we do <Icon name="arrow" /></a>
+        <a href="/contact/" class="btn btn--ghost">Contact us</a>
       </div>
     </div>
   </section>
 
-  <!-- ============ INTRO ============ -->
-  <section class="section section--light intro">
-    <div class="container intro__grid">
-      <div class="intro__text" data-reveal>
-        <h2 class="h2">Shipping is a simple business that is hard to do well.</h2>
-        <p class="lead">
-          A ship makes money when it is working, at a fair rate, for a charterer who pays, without wasting fuel or
-          days. The rest is detail, but the detail is where owners win or lose.
-        </p>
-        <p>
-          That detail is what we take care of. We started {site.name} to give owners and investors a
-          commercial manager who is careful with their money, close to the market and honest about how their ships
-          are doing.
-        </p>
-        <a href="/about/" class="text-link">More about us <Icon name="arrow" /></a>
+  <!-- ============ WHAT WE DO ============ -->
+  <section class="section section--light" id="what-we-do">
+    <div class="container wwd">
+      <div class="wwd__text" data-reveal>
+        <h2 class="h2">What we do</h2>
+        <ol class="wwd__list">
+          {site.services.map((s, i) => (
+            <li>
+              <span class="wwd__n">{String(i + 1).padStart(2, "0")}</span>
+              <span class="wwd__name">{s}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="wwd__note">Throughout the life cycle of the ship.</p>
       </div>
-      <figure class="intro__photo" data-reveal style="--delay:.1s">
+      <figure class="wwd__photo" data-reveal style="--delay:.1s">
         <img src="/images/detail.jpg" alt="Deck cranes and accommodation block of a bulk carrier alongside" loading="lazy" />
       </figure>
     </div>
   </section>
 
-  <!-- ============ SERVICES ============ -->
+  <!-- ============ BRIDGING THE GAP ============ -->
   <section class="section section--deep">
     <div class="container">
-      <div class="services__head" data-reveal>
-        <h2 class="h2">What we do</h2>
-        <a href="/services/" class="text-link">All services <Icon name="arrow" /></a>
+      <div class="section-head" data-reveal>
+        <h2 class="h2">Bridging the gap between seller, buyer, operator and charterer.</h2>
+        <p class="lead">{site.relationships}</p>
       </div>
-      <ol class="services">
-        {services.map((s, i) => (
-          <li data-reveal style={`--delay:${i * 0.06}s`}>
-            <a href={s.href}>
-              <span class="services__n">{i + 1}</span>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-              <Icon name="arrow" class="services__arrow" />
-            </a>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- ============ PRINCIPLES ============ -->
-  <section class="section section--dark divider-top">
-    <div class="container">
-      <h2 class="h2 principles__title" data-reveal>What we hold ourselves to</h2>
-      <div class="principles">
-        {principles.map((p, i) => (
-          <article data-reveal style={`--delay:${i * 0.08}s`}>
-            <h3>{p.title}</h3>
-            <p class="muted">{p.text}</p>
-          </article>
-        ))}
+      <div data-reveal style="--delay:.1s">
+        <Bridge />
       </div>
     </div>
   </section>
 
-  <!-- ============ LIFECYCLE ============ -->
-  <section class="section section--light">
-    <div class="container lifecycle">
-      <div class="lifecycle__intro" data-reveal>
-        <h2 class="h2">From purchase to sale.</h2>
-        <p class="lead">
-          Owners can hand us a single job or the whole lifecycle. Either way, it is one team, so nothing gets lost
-          between hand-offs.
-        </p>
-      </div>
-      <dl class="lifecycle__list" data-reveal style="--delay:.1s">
-        {lifecycle.map(([term, desc]) => (
-          <div>
-            <dt>{term}</dt>
-            <dd>{desc}</dd>
-          </div>
-        ))}
-      </dl>
-    </div>
-  </section>
-
-  <!-- ============ SEGMENTS ============ -->
-  <section class="section section--deep">
-    <div class="container">
-      <div class="segments__head" data-reveal>
-        <h2 class="h2">The ships we know</h2>
-        <p class="lead">Our commercial experience covers the main segments of international shipping.</p>
-      </div>
-      <div class="segments">
-        {segments.map((s, i) => (
-          <article data-reveal style={`--delay:${i * 0.07}s`}>
-            <Vessel type={s.type} />
-            <h3>{s.title}</h3>
-            <p class="muted">{s.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PHOTO BAND ============ -->
+  <!-- ============ TAGLINE BAND ============ -->
   <section class="band">
     <img class="band__photo" src="/images/band.jpg" alt="" loading="lazy" />
     <div class="band__shade" aria-hidden="true"></div>
     <div class="container band__inner" data-reveal>
-      <p class="band__quote">More than 80% of world trade by volume travels by sea.</p>
-      <p class="band__source">UNCTAD, Review of Maritime Transport</p>
-      <a href="/investors/" class="text-link">Why we think shipping is worth a look <Icon name="arrow" /></a>
+      <p class="band__quote">Anchored in Trust.<br />Driven by Excellence.</p>
     </div>
   </section>
 
@@ -225,12 +100,13 @@ const segments = [
   .hero__kicker {
     margin-bottom: 24px;
     font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--gold-300);
   }
   .hero h1 {
-    max-width: 13ch;
+    max-width: 15ch;
   }
   .hero .lead {
     margin-top: 28px;
@@ -243,168 +119,51 @@ const segments = [
     margin-top: 36px;
   }
 
-  /* Intro */
-  .intro__grid {
+  /* What we do */
+  .wwd {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     gap: clamp(40px, 6vw, 96px);
     align-items: center;
   }
-  .intro__text .h2 {
-    margin-bottom: 28px;
+  .wwd__list {
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-light);
   }
-  .intro__text .lead {
-    color: var(--text-on-light);
+  .wwd__list li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: baseline;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line-light);
   }
-  .intro__text p:not(.lead) {
+  .wwd__n {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold-600);
+  }
+  .wwd__name {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.2vw, 42px);
+    line-height: 1.1;
+  }
+  .wwd__note {
+    margin: 24px 0 0;
     color: var(--muted-on-light);
-    max-width: 60ch;
   }
-  .intro__photo {
+  .wwd__photo {
     margin: 0;
   }
-  .intro__photo img {
+  .wwd__photo img {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: var(--radius);
   }
 
-  /* Services list */
-  .services__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 24px;
-    margin-bottom: 40px;
-  }
-  .services {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    border-top: 1px solid var(--line-dark-strong);
-  }
-  .services li {
-    border-bottom: 1px solid var(--line-dark);
-  }
-  .services a {
-    display: grid;
-    grid-template-columns: 48px minmax(0, 0.9fr) minmax(0, 1.1fr) 32px;
-    gap: 24px;
-    align-items: baseline;
-    padding: 34px 0;
-    transition: padding 0.4s var(--ease), background 0.4s var(--ease);
-  }
-  .services a:hover {
-    padding-left: 12px;
-    background: linear-gradient(90deg, rgba(233, 200, 115, 0.05), transparent 70%);
-  }
-  .services__n {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--gold-500);
-  }
-  .services h3 {
-    font-size: clamp(28px, 2.8vw, 38px);
-  }
-  .services p {
-    margin: 0;
-    color: var(--muted-on-dark);
-  }
-  .services :global(.services__arrow) {
-    width: 22px;
-    height: 22px;
-    color: var(--gold-400);
-    align-self: center;
-    transition: transform 0.4s var(--ease);
-  }
-  .services a:hover :global(.services__arrow) {
-    transform: translateX(6px);
-  }
-
-  /* Principles */
-  .principles__title {
-    max-width: 18ch;
-    margin-bottom: clamp(40px, 5vw, 64px);
-  }
-  .principles {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(28px, 4vw, 64px);
-  }
-  .principles article {
-    padding-top: 28px;
-    border-top: 2px solid var(--gold-500);
-  }
-  .principles h3 {
-    margin-bottom: 14px;
-    font-size: 28px;
-    font-weight: 600;
-  }
-  .principles p {
-    margin: 0;
-  }
-
-  /* Lifecycle */
-  .lifecycle {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: clamp(40px, 7vw, 112px);
-    align-items: start;
-  }
-  .lifecycle__intro .lead {
-    margin-top: 22px;
-  }
-  .lifecycle__list {
-    margin: 0;
-    border-top: 1px solid var(--line-light);
-  }
-  .lifecycle__list div {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 24px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--line-light);
-  }
-  .lifecycle__list dt {
-    font-family: var(--font-display);
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-  .lifecycle__list dd {
-    margin: 0;
-    padding-top: 4px;
-    color: var(--muted-on-light);
-  }
-
-  /* Segments */
-  .segments__head {
-    max-width: 640px;
-    margin-bottom: 56px;
-  }
-  .segments__head .lead {
-    margin-top: 18px;
-  }
-  .segments {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(24px, 3vw, 48px);
-  }
-  .segments :global(.vessel) {
-    margin-bottom: 20px;
-  }
-  .segments h3 {
-    margin-bottom: 6px;
-    font-size: 26px;
-    font-weight: 600;
-  }
-  .segments p {
-    margin: 0;
-    font-size: 15.5px;
-  }
-
-  /* Photo band */
+  /* Tagline band */
   .band {
     position: relative;
     overflow: hidden;
@@ -427,52 +186,21 @@ const segments = [
     position: relative;
   }
   .band__quote {
-    max-width: 18ch;
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(38px, 5vw, 64px);
+    font-size: clamp(40px, 5.4vw, 72px);
     line-height: 1.08;
   }
-  .band__source {
-    margin: 18px 0 32px;
-    font-size: 13px;
-    color: var(--muted-on-dark);
-  }
 
-  @media (max-width: 1080px) {
-    .segments {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
   @media (max-width: 960px) {
-    .intro__grid,
-    .lifecycle {
+    .hero {
+      min-height: auto;
+    }
+    .wwd {
       grid-template-columns: 1fr;
     }
-    .intro__photo img {
+    .wwd__photo img {
       aspect-ratio: 16 / 10;
-    }
-    .principles {
-      grid-template-columns: 1fr;
-    }
-    .services a {
-      grid-template-columns: 36px 1fr 24px;
-    }
-    .services p {
-      grid-column: 2 / 3;
-    }
-    .services :global(.services__arrow) {
-      grid-column: 3;
-      grid-row: 1;
-    }
-  }
-  @media (max-width: 560px) {
-    .segments {
-      grid-template-columns: 1fr;
-    }
-    .lifecycle__list div {
-      grid-template-columns: 1fr;
-      gap: 4px;
     }
   }
 </style>

@@ -1,27 +1,16 @@
 ---
 import Icon from "./Icon.astro";
-interface Props {
-  title?: string;
-  text?: string;
-  secondary?: { href: string; label: string };
-}
-const {
-  secondary = { href: "/investors/", label: "Investors & partners" },
-  title = "Have a ship, a cargo or a question?",
-  text = "Whether you own tonnage, need a chartering partner or are looking at shipping as an investment, we would be glad to talk it through.",
-} = Astro.props;
+import { site } from "../data/site";
 ---
 <section class="cta-band">
   <div class="container cta-band__inner" data-reveal>
     <img src="/brand/logo-emblem.svg" alt="" class="cta-band__mark" width="160" height="160" loading="lazy" />
     <div class="cta-band__text">
-      
-      <h2 class="h2">{title}</h2>
-      <p class="lead">{text}</p>
+      <h2 class="h2">Contact us</h2>
+      <p class="lead"><a href={`mailto:${site.email}`} class="cta-band__email">{site.email}</a></p>
     </div>
     <div class="cta-band__actions">
       <a href="/contact/" class="btn btn--gold">Contact us <Icon name="arrow" /></a>
-      <a href={secondary.href} class="btn btn--ghost">{secondary.label}</a>
     </div>
   </div>
 </section>
@@ -54,6 +43,13 @@ const {
   .cta-band__text .lead {
     margin-top: 20px;
     margin-bottom: 0;
+  }
+  .cta-band__email {
+    color: var(--gold-300);
+    border-bottom: 1px solid var(--line-dark-strong);
+  }
+  .cta-band__email:hover {
+    border-bottom-color: var(--gold-300);
   }
   .cta-band__actions {
     position: relative;

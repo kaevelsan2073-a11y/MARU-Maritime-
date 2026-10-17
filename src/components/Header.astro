@@ -1,8 +1,8 @@
 ---
-import { nav } from "../data/site";
+import { nav, site } from "../data/site";
 import Icon from "./Icon.astro";
 const path = Astro.url.pathname;
-const isActive = (href: string) => path === href || path.startsWith(href);
+const isActive = (href: string) => !href.includes("#") && (path === href || path.startsWith(href));
 ---
 <header class="site-header" data-header>
   <div class="container site-header__inner">
@@ -10,7 +10,7 @@ const isActive = (href: string) => path === href || path.startsWith(href);
       <img src="/brand/logo-emblem.svg" alt="" width="46" height="46" class="brand__mark" />
       <span class="brand__text">
         <span class="brand__name">Maru Maritime</span>
-        <span class="brand__sub">Asset Management · Chartering</span>
+        <span class="brand__sub">{site.label}</span>
       </span>
     </a>
 

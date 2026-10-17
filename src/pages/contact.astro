@@ -4,29 +4,16 @@ import PageHero from "../components/PageHero.astro";
 import Icon from "../components/Icon.astro";
 import { site } from "../data/site";
 
-const topics = [
-  "Commercial management",
-  "Chartering",
-  "Asset management",
-  "Turnkey maritime services",
-  "Investment & partnerships",
-  "Careers",
-  "Other",
-];
+const topics = [...site.services, "Investors & partners", "General enquiry"];
 ---
 
-<Base title="Contact" description="Contact Maru Maritime about commercial management, chartering, asset management or investment partnerships.">
-  <PageHero
-    eyebrow="Contact"
-    title="Get in touch."
-    lead="Owner, investor, charterer or broker: if you think we could help, send us a note. We read everything and reply ourselves."
-  />
+<Base title="Contact" description={`Contact Maru Maritime at ${site.email}.`}>
+  <PageHero eyebrow="Contact" title="Contact us" lead={`Email us at ${site.email} or send a message using the form below.`} />
 
   <section class="section section--light">
     <div class="container contact">
       <aside class="contact__details" data-reveal>
-        <span class="eyebrow">Get in touch</span>
-        <h2 class="h2">Talk to us directly.</h2>
+        <h2 class="h2">Contact details</h2>
 
         <ul class="contact__list">
           <li>
@@ -39,8 +26,8 @@ const topics = [
           <li>
             <span class="icon-badge"><Icon name="pin" /></span>
             <div>
-              <h3>Office</h3>
-              <p>{site.office || "Address to be announced"}</p>
+              <h3>Location</h3>
+              <p>{site.location}</p>
             </div>
           </li>
         </ul>
@@ -81,7 +68,7 @@ const topics = [
         </label>
         <label class="consent">
           <input name="consent" type="checkbox" required />
-          <span>I agree that Maru Maritime may use these details to respond to my enquiry.</span>
+          <span>I agree that Maru Maritime may use these details to respond to my enquiry. See our <a href="/legal/">Legal &amp; Privacy</a> page.</span>
         </label>
         <p class="form-error" data-form-error hidden>Please complete the required fields marked with *.</p>
         <button type="submit" class="btn btn--navy">Send enquiry <Icon name="arrow" /></button>
@@ -221,6 +208,10 @@ const topics = [
     align-items: start;
     font-size: 14.5px;
     color: var(--muted-on-light);
+  }
+  .consent a {
+    color: var(--text-on-light);
+    text-decoration: underline;
   }
   .consent input {
     width: 18px;

@@ -14,22 +14,20 @@ const year = new Date().getFullYear();
         <ul>
           {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
           <li><a href="/contact/">Contact</a></li>
+          <li><a href="/legal/">Legal &amp; Privacy</a></li>
         </ul>
       </div>
       <div class="site-footer__col">
-        <h2>Services</h2>
+        <h2>What we do</h2>
         <ul>
-          <li><a href="/services/#commercial-management">Commercial Management</a></li>
-          <li><a href="/services/#chartering">Chartering</a></li>
-          <li><a href="/services/#asset-management">Asset Management</a></li>
-          <li><a href="/services/#turnkey-services">Turnkey Maritime Services</a></li>
+          {site.services.map((s) => <li><a href="/#what-we-do">{s}</a></li>)}
         </ul>
       </div>
       <div class="site-footer__col">
-        <h2>Get in touch</h2>
+        <h2>Contact</h2>
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li class="muted">{site.office || "Office address to be announced"}</li>
+          <li class="muted">{site.location}</li>
         </ul>
       </div>
     </div>
@@ -37,6 +35,7 @@ const year = new Date().getFullYear();
       <p>© {year} {site.name}. All rights reserved.</p>
       <p class="site-footer__tagline">{site.tagline}</p>
     </div>
+    <p class="site-footer__disclaimer">{site.disclaimer}</p>
   </div>
 </footer>
 
@@ -105,6 +104,14 @@ const year = new Date().getFullYear();
     text-transform: uppercase;
     font-size: 11.5px;
     color: var(--gold-500);
+  }
+  .site-footer__disclaimer {
+    max-width: 90ch;
+    margin: 20px 0 0;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--muted-on-dark);
+    opacity: 0.85;
   }
   @media (max-width: 960px) {
     .site-footer__top {

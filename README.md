@@ -1,7 +1,6 @@
 # Maru Maritime: Website
 
-Marketing website for **Maru Maritime**, a maritime asset management and turnkey maritime services platform
-focused on the commercial management and chartering of ships.
+Website for **Maru Maritime**, maritime asset management.
 
 Built with [Astro](https://astro.build) as a fully static site, with no server required.
 
@@ -25,16 +24,17 @@ src/
   data/site.ts      company details, contact emails and navigation, edited in one place
   styles/global.css design tokens (navy/gold palette, type scale) and shared components
   layouts/Base.astro  page shell: <head>, header, footer, scroll-reveal script
-  components/       Header, Footer, PageHero, CtaBand, ChartBackdrop, Vessel, Icon
-  pages/            index (Home), about, services, investors, contact
+  components/       Header, Footer, PageHero, CtaBand, Bridge, ChartBackdrop, Icon
+  pages/            index (Home), about, contact, legal, 404
 ```
 
-## Before launch: placeholders to confirm
+## Content rules
 
-- **Office address and phone**: `office` and `phone` in `src/data/site.ts`
-- **Contact form**: currently opens the visitor's email app with the enquiry pre-filled. Connect a form
-  service or backend if submissions should be collected directly.
-- **Legal pages**: privacy policy and website terms are not yet written.
+All company information lives in `src/data/site.ts` and comes from Maru Maritime directly: the company
+description, relationships (Japan, Korea, China), presence (United States, CT), services in priority order,
+contact email and the investment disclaimer. Do not add figures, track record, vessel types, processes or other
+claims that the company has not provided. The website handles no transactions; the contact form only opens an
+email to ships@marumaritime.com.
 
 ## Photography
 

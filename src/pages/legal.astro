@@ -1,0 +1,88 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../data/site";
+---
+
+<Base title="Legal & Privacy" description={`Website terms, privacy notice and credits for ${site.name}.`}>
+  <PageHero eyebrow="Legal" title="Legal &amp; Privacy" lead="Last updated: 17 October 2026" />
+
+  <section class="section section--light">
+    <div class="container legal">
+      <h2>Website terms</h2>
+      <p>
+        This website is operated by {site.name} and is provided for general information only. Nothing on this
+        website constitutes an offer to sell, or a solicitation of an offer to buy, any security, investment or
+        financial product, nor does it constitute investment, legal, tax or other professional advice.
+      </p>
+      <p>
+        While we aim to keep the information on this website accurate and up to date, it is provided "as is"
+        without any warranty of completeness or accuracy, and may be changed at any time without notice. To the
+        extent permitted by law, {site.name} accepts no liability for any loss arising from use of, or reliance on,
+        this website.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        This website does not use cookies, analytics or tracking tools, and it does not collect or store personal
+        information. The contact form does not send data to us directly: it opens your own email application with
+        your message pre-filled, and nothing is sent unless you choose to send that email.
+      </p>
+      <p>
+        If you email us, we use the information you provide (such as your name, company, email address, phone
+        number and message) only to respond to your enquiry and to correspond with you. We do not sell your
+        information.
+      </p>
+      <p>
+        This website is hosted by GitHub Pages. Like most web hosts, GitHub may process technical information such
+        as your IP address in order to deliver and secure the website. See the
+        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub General Privacy Statement</a>
+        for details.
+      </p>
+      <p>
+        For any question about your information, or to ask us to delete correspondence you have sent us, email
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+
+      <h2>Intellectual property</h2>
+      <p>
+        The {site.name} name, logo and website content are the property of {site.name}. Please do not reproduce
+        them without our permission.
+      </p>
+
+      <h2>Credits</h2>
+      <p>
+        Photographs are from Wikimedia Commons and are dedicated to the public domain (CC0). Vessel names have been
+        removed; the vessels shown are not owned or managed by {site.name}. Typefaces: Cinzel, Cormorant Garamond
+        and Inter, used under the SIL Open Font License.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        {site.name}, {site.location}<br />
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    max-width: 780px;
+  }
+  .legal h2 {
+    margin: 48px 0 16px;
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .legal h2:first-child {
+    margin-top: 0;
+  }
+  .legal p {
+    color: var(--muted-on-light);
+  }
+  .legal a {
+    color: var(--text-on-light);
+    text-decoration: underline;
+  }
+</style>

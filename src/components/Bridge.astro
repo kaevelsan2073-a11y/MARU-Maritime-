@@ -1,0 +1,142 @@
+---
+// "Bridging the gap" diagram: Maru Maritime connecting the four parties named
+// in the company description, plus where its relationships and presence are.
+import { site } from "../data/site";
+const [seller, buyer, operator, charterer] = site.parties;
+---
+<div class="bridge">
+  <div class="bridge__diagram" aria-hidden="true">
+    <svg viewBox="0 0 600 360" class="bridge__lines">
+      <g stroke="url(#bridge-gold)" stroke-width="1.5" fill="none">
+        <path d="M150 70 C 230 70 250 180 300 180" />
+        <path d="M450 70 C 370 70 350 180 300 180" />
+        <path d="M150 290 C 230 290 250 180 300 180" />
+        <path d="M450 290 C 370 290 350 180 300 180" />
+      </g>
+      <defs>
+        <linearGradient id="bridge-gold" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#c9a24b" stop-opacity=".35" />
+          <stop offset=".5" stop-color="#f3d98b" />
+          <stop offset="1" stop-color="#c9a24b" stop-opacity=".35" />
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="bridge__node bridge__node--tl">{seller}</span>
+    <span class="bridge__node bridge__node--tr">{buyer}</span>
+    <span class="bridge__node bridge__node--bl">{operator}</span>
+    <span class="bridge__node bridge__node--br">{charterer}</span>
+    <img class="bridge__hub" src="/brand/logo-emblem.svg" alt="" width="120" height="120" />
+  </div>
+  <p class="sr-only">{site.name} connects the {site.parties.join(", ").toLowerCase()}.</p>
+
+  <div class="bridge__regions">
+    <div>
+      <span class="bridge__label">Relationships</span>
+      <ul>
+        {site.relationshipRegions.map((r) => <li>{r}</li>)}
+      </ul>
+    </div>
+    <div>
+      <span class="bridge__label">Presence</span>
+      <ul>
+        <li>{site.presence}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bridge__diagram {
+    position: relative;
+    max-width: 600px;
+    aspect-ratio: 600 / 360;
+    margin-inline: auto;
+  }
+  .bridge__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .bridge__hub {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.5));
+  }
+  .bridge__node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 10px 22px;
+    border: 1px solid var(--line-dark-strong);
+    border-radius: 999px;
+    background: var(--navy-900);
+    font-family: var(--font-display);
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .bridge__node--tl { left: 25%; top: 19.4%; }
+  .bridge__node--tr { left: 75%; top: 19.4%; }
+  .bridge__node--bl { left: 25%; top: 80.6%; }
+  .bridge__node--br { left: 75%; top: 80.6%; }
+
+  .bridge__regions {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    margin-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--line-dark-strong);
+  }
+  .bridge__regions > div {
+    padding: 24px 0 0;
+  }
+  .bridge__regions > div + div {
+    padding-left: 32px;
+    border-left: 1px solid var(--line-dark);
+  }
+  .bridge__label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-400);
+  }
+  .bridge__regions ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.6vw, 34px);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  @media (max-width: 560px) {
+    .bridge__node {
+      padding: 6px 12px;
+      font-size: 15px;
+    }
+    .bridge__regions {
+      grid-template-columns: 1fr;
+    }
+    .bridge__regions > div + div {
+      margin-top: 20px;
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--line-dark);
+    }
+  }
+</style>
