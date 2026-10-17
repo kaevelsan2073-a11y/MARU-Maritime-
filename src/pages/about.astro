@@ -41,11 +41,11 @@ const journey = [
 ];
 ---
 
-<Base title="About" description="About Maru Maritime: a maritime asset management and chartering platform founded by Jatinder Sandhu.">
+<Base title="About" description="About Maru Maritime: a maritime asset management and chartering company.">
   <PageHero
     eyebrow="About us"
     title="A new company, started for a simple reason."
-    lead="Owners and investors should have a commercial manager who looks after their ships the way they would themselves. That is the company Jatinder Sandhu set out to build."
+    lead="Owners and investors should have a commercial manager who looks after their ships the way they would themselves. That is the company we set out to build."
   />
 
   <!-- Story -->
@@ -61,7 +61,7 @@ const journey = [
           average one shows up directly in what the owner earns.
         </p>
         <p>
-          {site.founder} founded {site.name} to close that gap. We are a maritime asset management and services
+          {site.name} was founded to close that gap. We are a maritime asset management and services
           company, and most of our attention goes to the commercial side: chartering, employment and making sure each
           voyage pays what it should.
         </p>
@@ -110,30 +110,6 @@ const journey = [
           </article>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- Leadership -->
-  <section class="section section--light" id="leadership">
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow">Leadership</span>
-        <h2 class="h2">Who runs the company.</h2>
-      </div>
-      <article class="leader" data-reveal>
-        <div class="leader__portrait" aria-hidden="true">
-          <span>JS</span>
-        </div>
-        <div class="leader__body">
-          <h3 class="leader__name">{site.founder}</h3>
-          <p class="leader__role">Founder</p>
-          <p class="leader__bio">
-            {site.founder} founded {site.name} and leads the business day to day, from commercial strategy to
-            relationships with owners, investors and charterers.
-          </p>
-          <p class="placeholder-note">Full biography and portrait to be added</p>
-        </div>
-      </article>
     </div>
   </section>
 
@@ -207,53 +183,6 @@ const journey = [
     font-size: 15.5px;
   }
 
-  .leader {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: clamp(32px, 5vw, 72px);
-    align-items: center;
-    padding: clamp(28px, 4vw, 48px);
-    border: 1px solid var(--line-light);
-    border-radius: var(--radius);
-    background: var(--ivory-50);
-  }
-  .leader__portrait {
-    display: grid;
-    place-items: center;
-    aspect-ratio: 4 / 5;
-    border-radius: var(--radius);
-    background:
-      radial-gradient(circle at 50% 35%, rgba(233, 200, 115, 0.25), transparent 60%),
-      linear-gradient(160deg, var(--navy-800), var(--navy-950));
-  }
-  .leader__portrait span {
-    font-family: var(--font-brand);
-    font-size: 64px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    background: var(--gold-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .leader__name {
-    font-size: clamp(34px, 3.4vw, 46px);
-  }
-  .leader__role {
-    margin: 8px 0 22px;
-    font-family: var(--font-brand);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--gold-600);
-  }
-  .leader__bio {
-    max-width: 60ch;
-    font-size: 18px;
-    color: var(--muted-on-light);
-  }
-
   .journey {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -315,12 +244,8 @@ const journey = [
     }
   }
   @media (max-width: 860px) {
-    .story,
-    .leader {
+    .story {
       grid-template-columns: 1fr;
-    }
-    .leader__portrait {
-      max-width: 240px;
     }
   }
   @media (max-width: 560px) {

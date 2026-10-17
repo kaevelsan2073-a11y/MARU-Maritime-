@@ -32,7 +32,6 @@ src/
 ## Before launch: placeholders to confirm
 
 - **Office address and phone**: `office` and `phone` in `src/data/site.ts`
-- **Founder biography and portrait**: About page, Leadership section
 - **Contact form**: currently opens the visitor's email app with the enquiry pre-filled. Connect a form
   service or backend if submissions should be collected directly.
 - **Legal pages**: privacy policy and website terms are not yet written.
