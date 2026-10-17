@@ -42,9 +42,12 @@ email to ships@marumaritime.com.
 All photos are CC0 / public domain from Wikimedia Commons (no attribution required). Ship names were cropped
 or painted out so no third-party vessel appears to belong to Maru Maritime.
 
-- `public/images/hero.jpg`: "Crude Oil Tanker in Port Arthur, Texas" (Wikimedia Commons, CC0), bow name and funnel logo removed
-- `public/images/detail.jpg`: "Chemical tanker Ternholm at Skarvikshamnen 1" (Wikimedia Commons, CC0), cropped to exclude name and logos
-- `public/images/band.jpg`: "Chemical tanker Nordic Henriette on Nieuwe Waterweg, Rotterdam" (Wikimedia Commons, CC0), cropped to exclude name and logo
+- `public/images/hero.jpg`: "Sunrise on Vereda del Lago and Eagle Austin Ship in Maracaibo lake" (Wikimedia Commons, CC0), cropped, mirrored, funnel emblem and name board removed
+- `public/images/detail.jpg`: "Crude Oil Tanker in Port Arthur, Texas" (Wikimedia Commons, CC0), bow name and funnel logo removed
+- `public/images/band.jpg`: "Crude oil tanker Eagle San Diego" (Wikimedia Commons, CC0), hull name removed
+
+The relationships map is generated at build time from Natural Earth data (public domain) via the `world-atlas`
+package.
 
 Replace these with Maru Maritime's own photography when available.
 

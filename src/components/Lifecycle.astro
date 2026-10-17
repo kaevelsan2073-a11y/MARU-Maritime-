@@ -1,0 +1,156 @@
+---
+// Circular lifecycle diagram: stages placed around a ring with the emblem at the centre,
+// plus a numbered list of the stage descriptions.
+interface Props {
+  stages: [string, string][];
+  caption?: string;
+}
+const { stages, caption = "Throughout the life cycle of the ship" } = Astro.props;
+
+const S = 560;
+const C = S / 2;
+const R = 200;
+const NODE = 46;
+const n = stages.length;
+const nodes = stages.map(([term], i) => {
+  const a = ((-90 + (360 / n) * i) * Math.PI) / 180;
+  return { term, x: C + R * Math.cos(a), y: C + R * Math.sin(a), a };
+});
+// Arc segments between consecutive nodes, trimmed so they stop at the node edges.
+const gap = (NODE + 10) / R; // radians to leave around each node
+const arcs = nodes.map((_, i) => {
+  const a0 = nodes[i].a + gap;
+  const a1 = nodes[(i + 1) % n].a - gap + (i === n - 1 ? Math.PI * 2 : 0);
+  const p0 = [C + R * Math.cos(a0), C + R * Math.sin(a0)];
+  const p1 = [C + R * Math.cos(a1), C + R * Math.sin(a1)];
+  return `M${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${R} ${R} 0 0 1 ${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`;
+});
+---
+
+<div class="cycle">
+  <div class="cycle__ring">
+    <svg viewBox={`0 0 ${S} ${S}`} role="img" aria-label={`Lifecycle: ${stages.map(([t]) => t).join(", ")}`}>
+      <defs>
+        <marker id="cycle-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#a57b2b" />
+        </marker>
+      </defs>
+      <circle cx={C} cy={C} r={R + 62} class="cycle__halo" />
+      <circle cx={C} cy={C} r={R - 70} class="cycle__inner" />
+      {arcs.map((d) => <path d={d} class="cycle__arc" marker-end="url(#cycle-arrow)" />)}
+      {nodes.map((p, i) => (
+        <g class="cycle__node">
+          <circle cx={p.x} cy={p.y} r={NODE} />
+          <text x={p.x} y={p.y - 8} text-anchor="middle" class="cycle__num">{String(i + 1).padStart(2, "0")}</text>
+          <text x={p.x} y={p.y + 16} text-anchor="middle" class="cycle__term">{p.term}</text>
+        </g>
+      ))}
+      <image href="/brand/logo-emblem.svg" x={C - 62} y={C - 92} width="124" height="124" />
+      <text x={C} y={C + 62} text-anchor="middle" class="cycle__caption">{caption.split(" ").slice(0, 3).join(" ")}</text>
+      <text x={C} y={C + 84} text-anchor="middle" class="cycle__caption">{caption.split(" ").slice(3).join(" ")}</text>
+    </svg>
+  </div>
+  <ol class="cycle__list">
+    {stages.map(([term, desc], i) => (
+      <li>
+        <span class="cycle__list-num">{String(i + 1).padStart(2, "0")}</span>
+        <div>
+          <h3>{term}</h3>
+          <p>{desc}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .cycle {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: center;
+  }
+  .cycle__ring svg {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+  }
+  .cycle__halo {
+    fill: none;
+    stroke: rgba(165, 123, 43, 0.25);
+    stroke-dasharray: 2 8;
+  }
+  .cycle__inner {
+    fill: #0f2a4d;
+  }
+  .cycle__arc {
+    fill: none;
+    stroke: #c9a24b;
+    stroke-width: 2;
+  }
+  .cycle__node circle {
+    fill: var(--ivory-50);
+    stroke: #c9a24b;
+    stroke-width: 1.5;
+    transition: fill 0.3s;
+  }
+  .cycle__node:hover circle {
+    fill: #f6ecd0;
+  }
+  .cycle__num {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    fill: #a57b2b;
+  }
+  .cycle__term {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    fill: var(--text-on-light);
+  }
+  .cycle__caption {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    fill: #e9c873;
+  }
+  .cycle__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-light);
+  }
+  .cycle__list li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line-light);
+  }
+  .cycle__list-num {
+    padding-top: 5px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold-600);
+  }
+  .cycle__list h3 {
+    margin-bottom: 4px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .cycle__list p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--muted-on-light);
+  }
+  @media (max-width: 960px) {
+    .cycle {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

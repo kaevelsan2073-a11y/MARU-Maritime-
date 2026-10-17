@@ -87,7 +87,7 @@ const engagement = [
 ---
 
 <Base title="Services" description="Asset management, commercial management, chartering and turnkey services from Maru Maritime.">
-  <PageHero eyebrow="Services" title="What we do." lead={site.description}>
+  <PageHero eyebrow="Services" title="What we do." lead={site.description} image="/images/band.jpg" imagePosition="60% 50%">
     <nav class="jump" aria-label="Services on this page" data-reveal style="--delay:.24s">
       {services.map((s) => (
         <a href={`#${s.id}`}><Icon name={s.icon} />{s.title}</a>

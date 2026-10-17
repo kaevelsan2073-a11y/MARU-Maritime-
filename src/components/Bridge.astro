@@ -1,142 +1,179 @@
 ---
-// "Bridging the gap" diagram: Maru Maritime connecting the four parties named
-// in the company description, plus where its relationships and presence are.
+// "Bridging the gap": the four parties named in the company description, connected through
+// Maru Maritime in two lanes (seller to buyer, operator to charterer).
+import Icon from "./Icon.astro";
 import { site } from "../data/site";
 const [seller, buyer, operator, charterer] = site.parties;
 ---
-<div class="bridge">
-  <div class="bridge__diagram" aria-hidden="true">
-    <svg viewBox="0 0 600 360" class="bridge__lines">
-      <g stroke="url(#bridge-gold)" stroke-width="1.5" fill="none">
-        <path d="M150 70 C 230 70 250 180 300 180" />
-        <path d="M450 70 C 370 70 350 180 300 180" />
-        <path d="M150 290 C 230 290 250 180 300 180" />
-        <path d="M450 290 C 370 290 350 180 300 180" />
-      </g>
-      <defs>
-        <linearGradient id="bridge-gold" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#c9a24b" stop-opacity=".35" />
-          <stop offset=".5" stop-color="#f3d98b" />
-          <stop offset="1" stop-color="#c9a24b" stop-opacity=".35" />
-        </linearGradient>
-      </defs>
-    </svg>
-    <span class="bridge__node bridge__node--tl">{seller}</span>
-    <span class="bridge__node bridge__node--tr">{buyer}</span>
-    <span class="bridge__node bridge__node--bl">{operator}</span>
-    <span class="bridge__node bridge__node--br">{charterer}</span>
-    <img class="bridge__hub" src="/brand/logo-emblem.svg" alt="" width="120" height="120" />
+<div class="bridge" role="img" aria-label={`${site.name} bridges the gap between the ${site.parties.join(", ").toLowerCase()}.`}>
+  <div class="bridge__party bridge__party--s"><span class="bridge__icon"><Icon name="tag" /></span>{seller}</div>
+  <div class="bridge__line bridge__line--1" aria-hidden="true"><i></i></div>
+  <div class="bridge__hub" aria-hidden="true">
+    <img src="/brand/logo-emblem.svg" alt="" width="120" height="120" />
+    <span>{site.name}</span>
   </div>
-  <p class="sr-only">{site.name} connects the {site.parties.join(", ").toLowerCase()}.</p>
+  <div class="bridge__line bridge__line--2" aria-hidden="true"><i></i></div>
+  <div class="bridge__party bridge__party--b"><span class="bridge__icon"><Icon name="key" /></span>{buyer}</div>
 
-  <div class="bridge__regions">
-    <div>
-      <span class="bridge__label">Relationships</span>
-      <ul>
-        {site.relationshipRegions.map((r) => <li>{r}</li>)}
-      </ul>
-    </div>
-    <div>
-      <span class="bridge__label">Presence</span>
-      <ul>
-        <li>{site.presence}</li>
-      </ul>
-    </div>
-  </div>
+  <div class="bridge__party bridge__party--o"><span class="bridge__icon"><Icon name="turnkey" /></span>{operator}</div>
+  <div class="bridge__line bridge__line--3" aria-hidden="true"><i></i></div>
+  <div class="bridge__line bridge__line--4" aria-hidden="true"><i></i></div>
+  <div class="bridge__party bridge__party--c"><span class="bridge__icon"><Icon name="chartering" /></span>{charterer}</div>
 </div>
 
 <style>
-  .bridge__diagram {
-    position: relative;
-    max-width: 600px;
-    aspect-ratio: 600 / 360;
-    margin-inline: auto;
+  .bridge {
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) 1fr 180px 1fr minmax(150px, 220px);
+    grid-template-areas:
+      "s l1 hub l2 b"
+      "o l3 hub l4 c";
+    align-items: center;
+    row-gap: 36px;
   }
-  .bridge__lines {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .bridge__hub {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 20%;
-    height: auto;
-    transform: translate(-50%, -50%);
-    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.5));
-  }
-  .bridge__node {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    padding: 10px 22px;
+  .bridge__party--s { grid-area: s; }
+  .bridge__party--b { grid-area: b; }
+  .bridge__party--o { grid-area: o; }
+  .bridge__party--c { grid-area: c; }
+  .bridge__line--1 { grid-area: l1; }
+  .bridge__line--2 { grid-area: l2; }
+  .bridge__line--3 { grid-area: l3; }
+  .bridge__line--4 { grid-area: l4; }
+  .bridge__hub { grid-area: hub; }
+
+  .bridge__party {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
     border: 1px solid var(--line-dark-strong);
     border-radius: 999px;
-    background: var(--navy-900);
+    background: linear-gradient(180deg, rgba(24, 53, 99, 0.6), rgba(10, 27, 51, 0.6));
     font-family: var(--font-display);
-    font-size: clamp(18px, 2vw, 24px);
+    font-size: clamp(20px, 1.8vw, 26px);
     font-weight: 600;
     white-space: nowrap;
   }
-  .bridge__node--tl { left: 25%; top: 19.4%; }
-  .bridge__node--tr { left: 75%; top: 19.4%; }
-  .bridge__node--bl { left: 25%; top: 80.6%; }
-  .bridge__node--br { left: 75%; top: 80.6%; }
-
-  .bridge__regions {
+  .bridge__party--b,
+  .bridge__party--c {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+  }
+  .bridge__icon {
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    margin-top: clamp(40px, 5vw, 64px);
-    border-top: 1px solid var(--line-dark-strong);
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(233, 200, 115, 0.12);
+    color: var(--gold-300);
   }
-  .bridge__regions > div {
-    padding: 24px 0 0;
+  .bridge__icon :global(svg) {
+    width: 20px;
+    height: 20px;
   }
-  .bridge__regions > div + div {
-    padding-left: 32px;
-    border-left: 1px solid var(--line-dark);
+
+  .bridge__line {
+    position: relative;
+    height: 2px;
+    margin: 0 -1px;
+    background: linear-gradient(90deg, rgba(201, 162, 75, 0.25), var(--gold-300), rgba(201, 162, 75, 0.25));
   }
-  .bridge__label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold-400);
+  /* Lanes run under the hub so both rows visibly pass through Maru Maritime. */
+  .bridge__line--1,
+  .bridge__line--3 {
+    margin-right: -90px;
   }
-  .bridge__regions ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 40px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-family: var(--font-display);
-    font-size: clamp(26px, 2.6vw, 34px);
+  .bridge__line--2,
+  .bridge__line--4 {
+    margin-left: -90px;
   }
-  .sr-only {
+  .bridge__line i {
     position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+    top: 50%;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background: var(--gold-200);
+    box-shadow: 0 0 12px 3px rgba(243, 217, 139, 0.6);
+    animation: bridge-flow 3.2s linear infinite;
   }
-  @media (max-width: 560px) {
-    .bridge__node {
-      padding: 6px 12px;
-      font-size: 15px;
+  .bridge__line--2 i,
+  .bridge__line--4 i {
+    animation-delay: 1.6s;
+  }
+  @keyframes bridge-flow {
+    from { left: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    to { left: calc(100% - 8px); opacity: 0; }
+  }
+
+  .bridge__hub {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  .bridge__hub img {
+    width: 150px;
+    height: 150px;
+    padding: 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--navy-950) 62%, rgba(6, 15, 30, 0) 72%);
+    filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.55));
+  }
+  .bridge__hub span {
+    font-family: var(--font-brand);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-300);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bridge__line i {
+      display: none;
     }
-    .bridge__regions {
-      grid-template-columns: 1fr;
+  }
+  @media (max-width: 860px) {
+    .bridge {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "s b"
+        "hub hub"
+        "o c";
+      gap: 20px;
     }
-    .bridge__regions > div + div {
-      margin-top: 20px;
-      padding-left: 0;
-      border-left: 0;
-      border-top: 1px solid var(--line-dark);
+    .bridge__line {
+      display: none;
+    }
+    .bridge__party,
+    .bridge__party--b,
+    .bridge__party--c {
+      flex-direction: row;
+      justify-content: center;
+    }
+    .bridge__hub img {
+      width: 110px;
+      height: 110px;
+    }
+  }
+  @media (max-width: 420px) {
+    .bridge__party {
+      padding: 12px 14px;
+      font-size: 18px;
+    }
+    .bridge__icon {
+      width: 32px;
+      height: 32px;
     }
   }
 </style>

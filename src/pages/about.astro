@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import Bridge from "../components/Bridge.astro";
+import RelationshipMap from "../components/RelationshipMap.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
 import { site } from "../data/site";
@@ -17,7 +18,7 @@ const values = [
 ---
 
 <Base title="About" description={site.description}>
-  <PageHero eyebrow="About" title="About Maru Maritime" />
+  <PageHero eyebrow="About" title="About Maru Maritime" image="/images/detail.jpg" imagePosition="55% 40%" />
 
   <!-- Who we are -->
   <section class="section section--light">
@@ -79,7 +80,10 @@ const values = [
       <div class="section-head" data-reveal>
         <h2 class="h2">Relationships and presence</h2>
       </div>
-      <div data-reveal style="--delay:.1s">
+      <div class="about-map" data-reveal style="--delay:.1s">
+        <RelationshipMap />
+      </div>
+      <div class="about-bridge" data-reveal style="--delay:.15s">
         <Bridge />
       </div>
     </div>
@@ -146,6 +150,13 @@ const values = [
     font-size: 15.5px;
   }
 
+  .about-map {
+    margin-bottom: clamp(48px, 6vw, 80px);
+  }
+  .about-bridge {
+    padding-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--line-dark);
+  }
   .tagline {
     text-align: center;
   }

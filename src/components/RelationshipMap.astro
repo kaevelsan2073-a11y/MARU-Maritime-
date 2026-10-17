@@ -1,0 +1,256 @@
+---
+// Pacific-centred map rendered to static SVG at build time (Natural Earth data via world-atlas,
+// public domain). Shows the company's relationships (Japan, Korea, China) and presence (United States, CT).
+import { geoMercator, geoPath, geoGraticule10 } from "d3-geo";
+import { feature } from "topojson-client";
+import { presimplify, simplify, quantile } from "topojson-simplify";
+import world from "world-atlas/countries-50m.json";
+import { site } from "../data/site";
+
+const W = 1200;
+const H = 560;
+// Simplify coastlines: full 50m detail is far more than this map needs.
+const pre = presimplify(world as any);
+const topo = simplify(pre, quantile(pre, 0.6)) as any;
+const countries = (feature(topo, topo.objects.countries) as any).features as any[];
+
+// Frame: western China to the US east coast, centred on the Pacific.
+const projection = geoMercator().rotate([160, 0]);
+projection.fitExtent(
+  [
+    [10, 10],
+    [W - 10, H - 10],
+  ],
+  { type: "MultiPoint", coordinates: [[100, 16], [-64, 16], [100, 56], [-64, 56]] } as any,
+);
+projection.clipExtent([
+  [0, 0],
+  [W, H],
+]);
+const path = geoPath(projection).digits(0);
+
+const RELATIONSHIP_IDS = new Set(["156", "392", "410"]); // China, Japan, South Korea
+const PRESENCE_ID = "840"; // United States
+
+// Highlight only the contiguous United States (not Alaska or Hawaii) as the presence.
+const splitUS = (c: any) => {
+  const polys: number[][][][] = c.geometry.type === "MultiPolygon" ? c.geometry.coordinates : [c.geometry.coordinates];
+  const isMainland = (poly: number[][][]) => {
+    const [lon, lat] = poly[0][0];
+    return lon > -128 && lon < -65 && lat > 24 && lat < 50;
+  };
+  return [
+    { type: "Feature", geometry: { type: "MultiPolygon", coordinates: polys.filter(isMainland) }, kind: "presence" },
+    { type: "Feature", geometry: { type: "MultiPolygon", coordinates: polys.filter((p) => !isMainland(p)) }, kind: "country" },
+  ];
+};
+const land = countries
+  .flatMap((c) =>
+    c.id === PRESENCE_ID
+      ? splitUS(c)
+      : [{ ...c, kind: RELATIONSHIP_IDS.has(String(c.id)) ? "relationship" : "country" }],
+  )
+  .map((c: any) => ({ d: path(c), kind: c.kind }))
+  .filter((c) => c.d);
+const graticule = path(geoGraticule10());
+
+const place = (lonlat: [number, number]) => projection(lonlat) as [number, number];
+const hub = place([-72.7, 41.6]); // Connecticut
+const asia = [
+  { name: "Japan", at: place([138.6, 36.4]), dx: 18, dy: 6, anchor: "start" },
+  { name: "Korea", at: place([127.9, 36.5]), dx: -4, dy: -18, anchor: "middle" },
+  { name: "China", at: place([114, 31.5]), dx: 6, dy: 40, anchor: "middle" },
+];
+
+// Arcs drawn in screen space so they bow gracefully over the Pacific.
+const arc = (from: [number, number], to: [number, number], lift: number) => {
+  const mx = (from[0] + to[0]) / 2;
+  const my = Math.min(from[1], to[1]) - lift;
+  return `M${from[0].toFixed(1)} ${from[1].toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${to[0].toFixed(1)} ${to[1].toFixed(1)}`;
+};
+const arcs = asia.map((a, i) => arc(hub, a.at, 250 - i * 55));
+---
+
+<figure class="rmap">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="rmap-title rmap-desc">
+    <title id="rmap-title">Relationships and presence</title>
+    <desc id="rmap-desc">
+      Map showing relationships in {site.relationshipRegions.join(", ")} and presence in the {site.presence}.
+    </desc>
+    <defs>
+      <linearGradient id="rmap-arc" x1="1" y1="0" x2="0" y2="0">
+        <stop offset="0" stop-color="#f3d98b" />
+        <stop offset="1" stop-color="#c9a24b" stop-opacity=".55" />
+      </linearGradient>
+      <radialGradient id="rmap-glow">
+        <stop offset="0" stop-color="#f3d98b" stop-opacity=".55" />
+        <stop offset="1" stop-color="#f3d98b" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <path d={graticule} class="rmap__grid" />
+    <g class="rmap__land">
+      {land.map((c) => <path d={c.d} class={`rmap__${c.kind}`} />)}
+    </g>
+    <g class="rmap__arcs">
+      {arcs.map((d) => (
+        <>
+          <path d={d} class="rmap__arc-base" />
+          <path d={d} class="rmap__arc" />
+        </>
+      ))}
+    </g>
+    {asia.map((a) => (
+      <g>
+        <circle cx={a.at[0]} cy={a.at[1]} r="22" fill="url(#rmap-glow)" />
+        <circle cx={a.at[0]} cy={a.at[1]} r="5.5" class="rmap__dot rmap__dot--rel" />
+        <text x={a.at[0] + a.dx} y={a.at[1] + a.dy} text-anchor={a.anchor} class="rmap__label">{a.name}</text>
+      </g>
+    ))}
+    <g>
+      <circle cx={hub[0]} cy={hub[1]} r="30" fill="url(#rmap-glow)" />
+      <circle cx={hub[0]} cy={hub[1]} r="7.5" class="rmap__dot rmap__dot--hub" />
+      <text x={hub[0] - 20} y={hub[1] + 34} text-anchor="end" class="rmap__label rmap__label--hub">{site.presence}</text>
+      <text x={hub[0] - 20} y={hub[1] + 58} text-anchor="end" class="rmap__sub">{site.location}</text>
+    </g>
+  </svg>
+  <figcaption class="rmap__legend">
+    <span><i class="rmap__key rmap__key--rel"></i>Relationships: {site.relationshipRegions.join(" · ")}</span>
+    <span><i class="rmap__key rmap__key--hub"></i>Presence: {site.presence}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .rmap {
+    margin: 0;
+  }
+  .rmap svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    /* Fade the map edges into the section background instead of a hard rectangle. */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+      linear-gradient(to bottom, transparent, #000 9%, #000 88%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+      linear-gradient(to bottom, transparent, #000 9%, #000 88%, transparent);
+    mask-composite: intersect;
+  }
+  .rmap__grid {
+    fill: none;
+    stroke: rgba(233, 200, 115, 0.06);
+    stroke-width: 1;
+  }
+  .rmap__land {
+    stroke: rgba(6, 15, 30, 0.9);
+    stroke-width: 0.6;
+    stroke-linejoin: round;
+  }
+  .rmap__country {
+    fill: #1a3358;
+  }
+  .rmap__relationship {
+    fill: rgba(233, 200, 115, 0.32);
+    stroke: rgba(243, 217, 139, 0.85);
+    stroke-width: 0.9;
+  }
+  .rmap__presence {
+    fill: rgba(233, 200, 115, 0.5);
+    stroke: rgba(243, 217, 139, 0.95);
+    stroke-width: 0.9;
+  }
+  .rmap__arc-base {
+    fill: none;
+    stroke: rgba(243, 217, 139, 0.18);
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+  .rmap__arc {
+    fill: none;
+    stroke: url(#rmap-arc);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 6 9;
+    animation: rmap-flow 2.4s linear infinite;
+  }
+  @keyframes rmap-flow {
+    to {
+      stroke-dashoffset: -30;
+    }
+  }
+  .rmap__dot--rel {
+    fill: #f3d98b;
+    stroke: var(--navy-950);
+    stroke-width: 2;
+  }
+  .rmap__dot--hub {
+    fill: #f6de94;
+    stroke: var(--navy-950);
+    stroke-width: 2.5;
+  }
+  .rmap__label {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
+    fill: var(--text-on-dark);
+    paint-order: stroke;
+    stroke: var(--navy-950);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+  .rmap__label--hub {
+    font-size: 28px;
+    fill: var(--gold-300);
+  }
+  .rmap__sub {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    fill: var(--muted-on-dark);
+    paint-order: stroke;
+    stroke: var(--navy-950);
+    stroke-width: 4px;
+  }
+  .rmap__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 36px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--muted-on-dark);
+  }
+  .rmap__legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .rmap__key {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid var(--gold-300);
+  }
+  .rmap__key--rel {
+    background: rgba(233, 200, 115, 0.32);
+  }
+  .rmap__key--hub {
+    background: rgba(233, 200, 115, 0.6);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rmap__arc {
+      animation: none;
+    }
+  }
+  @media (max-width: 640px) {
+    .rmap__label {
+      font-size: 34px;
+    }
+    .rmap__label--hub {
+      font-size: 36px;
+    }
+    .rmap__sub {
+      font-size: 22px;
+    }
+  }
+</style>

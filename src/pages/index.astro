@@ -1,6 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
 import Bridge from "../components/Bridge.astro";
+import Lifecycle from "../components/Lifecycle.astro";
+import RelationshipMap from "../components/RelationshipMap.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
 import { site } from "../data/site";
@@ -67,7 +69,7 @@ const lifecycle = [
         <a href="/services/" class="text-link">All services <Icon name="arrow" /></a>
       </div>
       <figure class="wwd__photo" data-reveal style="--delay:.1s">
-        <img src="/images/detail.jpg" alt="Cargo loading arms beside a chemical tanker at a terminal" loading="lazy" />
+        <img src="/images/detail.jpg" alt="Aerial view of a crude oil tanker underway" loading="lazy" />
       </figure>
     </div>
   </section>
@@ -79,7 +81,10 @@ const lifecycle = [
         <h2 class="h2">Bridging the gap between seller, buyer, operator and charterer.</h2>
         <p class="lead">{site.relationships}</p>
       </div>
-      <div data-reveal style="--delay:.1s">
+      <div class="gap-map" data-reveal style="--delay:.1s">
+        <RelationshipMap />
+      </div>
+      <div class="gap-bridge" data-reveal style="--delay:.15s">
         <Bridge />
       </div>
     </div>
@@ -87,22 +92,17 @@ const lifecycle = [
 
   <!-- ============ LIFECYCLE ============ -->
   <section class="section section--light">
-    <div class="container lifecycle">
-      <div class="lifecycle__intro" data-reveal>
+    <div class="container">
+      <div class="section-head" data-reveal>
         <h2 class="h2">From purchase to sale.</h2>
         <p class="lead">
           Owners can hand us a single job or the whole lifecycle. Either way, it is one team, so nothing gets lost
           between hand-offs.
         </p>
       </div>
-      <dl class="lifecycle__list" data-reveal style="--delay:.1s">
-        {lifecycle.map(([term, desc]) => (
-          <div>
-            <dt>{term}</dt>
-            <dd>{desc}</dd>
-          </div>
-        ))}
-      </dl>
+      <div data-reveal style="--delay:.1s">
+        <Lifecycle stages={lifecycle as [string, string][]} />
+      </div>
     </div>
   </section>
 
@@ -150,14 +150,14 @@ const lifecycle = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 50%;
+    object-position: 72% 55%;
   }
   .hero__shade {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(90deg, rgba(6, 15, 30, 0.94) 0%, rgba(6, 15, 30, 0.78) 42%, rgba(6, 15, 30, 0.25) 100%),
-      linear-gradient(0deg, rgba(6, 15, 30, 0.85) 0%, rgba(6, 15, 30, 0) 45%);
+      linear-gradient(90deg, rgba(6, 15, 30, 0.92) 0%, rgba(6, 15, 30, 0.7) 40%, rgba(6, 15, 30, 0.12) 100%),
+      linear-gradient(0deg, rgba(6, 15, 30, 0.8) 0%, rgba(6, 15, 30, 0) 40%);
   }
   .hero__inner {
     position: relative;
@@ -220,9 +220,10 @@ const lifecycle = [
   }
   .wwd__photo img {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
     border-radius: var(--radius);
+    box-shadow: 0 30px 60px rgba(6, 15, 30, 0.18);
   }
 
   /* Principles */
@@ -248,37 +249,13 @@ const lifecycle = [
     margin: 0;
   }
 
-  /* Lifecycle */
-  .lifecycle {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: clamp(40px, 7vw, 112px);
-    align-items: start;
+  /* Bridging the gap */
+  .gap-map {
+    margin: 8px 0 clamp(48px, 6vw, 80px);
   }
-  .lifecycle__intro .lead {
-    margin-top: 22px;
-  }
-  .lifecycle__list {
-    margin: 0;
-    border-top: 1px solid var(--line-light);
-  }
-  .lifecycle__list div {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 24px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--line-light);
-  }
-  .lifecycle__list dt {
-    font-family: var(--font-display);
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-  .lifecycle__list dd {
-    margin: 0;
-    padding-top: 4px;
-    color: var(--muted-on-light);
+  .gap-bridge {
+    padding-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--line-dark);
   }
 
   .wwd__list a {
@@ -330,23 +307,14 @@ const lifecycle = [
     line-height: 1.08;
   }
 
-  @media (max-width: 560px) {
-    .lifecycle__list div {
-      grid-template-columns: 1fr;
-      gap: 4px;
-    }
-  }
   @media (max-width: 960px) {
     .hero {
       min-height: auto;
     }
     .wwd,
-    .lifecycle,
     .principles {
       grid-template-columns: 1fr;
     }
-    .wwd__photo img {
-      aspect-ratio: 16 / 10;
-    }
+
   }
 </style>
