@@ -1,0 +1,126 @@
+---
+import { nav, site } from "../data/site";
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <img src="/brand/logo-seal.svg" alt="Maru Maritime seal" width="132" height="132" loading="lazy" />
+        <p>{site.description}</p>
+      </div>
+      <div class="site-footer__col">
+        <h2>Company</h2>
+        <ul>
+          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h2>Services</h2>
+        <ul>
+          <li><a href="/services/#commercial-management">Commercial Management</a></li>
+          <li><a href="/services/#chartering">Chartering</a></li>
+          <li><a href="/services/#asset-management">Asset Management</a></li>
+          <li><a href="/services/#turnkey-services">Turnkey Maritime Services</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h2>Get in touch</h2>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={`mailto:${site.charteringEmail}`}>{site.charteringEmail}</a></li>
+          <li class="muted">{site.office || "Office address to be announced"}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <p class="site-footer__tagline">{site.tagline}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    padding: clamp(72px, 9vw, 112px) 0 36px;
+    background: var(--navy-975);
+    border-top: 1px solid var(--line-dark);
+    font-size: 15px;
+  }
+  .site-footer__top {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 48px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .site-footer__brand img {
+    width: 132px;
+    height: 132px;
+    margin-bottom: 24px;
+  }
+  .site-footer__brand p {
+    max-width: 40ch;
+    color: var(--muted-on-dark);
+  }
+  .site-footer__col h2 {
+    margin-bottom: 22px;
+    font-family: var(--font-brand);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold-400);
+  }
+  .site-footer__col ul {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .site-footer__col a {
+    color: var(--text-on-dark);
+    transition: color 0.3s;
+    overflow-wrap: anywhere;
+  }
+  .site-footer__col a:hover {
+    color: var(--gold-300);
+  }
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding-top: 28px;
+    font-size: 13px;
+    color: var(--muted-on-dark);
+  }
+  .site-footer__bottom p {
+    margin: 0;
+  }
+  .site-footer__tagline {
+    font-family: var(--font-brand);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 11.5px;
+    color: var(--gold-500);
+  }
+  @media (max-width: 960px) {
+    .site-footer__top {
+      grid-template-columns: 1fr 1fr;
+    }
+    .site-footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 560px) {
+    .site-footer__top {
+      grid-template-columns: 1fr;
+    }
+    .site-footer__bottom {
+      flex-direction: column;
+    }
+  }
+</style>

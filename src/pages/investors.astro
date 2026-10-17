@@ -1,0 +1,391 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+
+const reasons = [
+  { icon: "globe", title: "Essential to world trade", text: "Shipping carries the large majority of global trade by volume. Demand is tied to fundamental flows of energy, raw materials and goods." },
+  { icon: "asset", title: "Real, tangible assets", text: "Vessels are hard assets with second-hand and scrap values, offering a different risk profile from purely financial exposures." },
+  { icon: "commercial", title: "Income-generating", text: "Ships earn freight and hire. Employment strategy determines how much of that income is secured and for how long." },
+  { icon: "horizon", title: "Cyclical opportunity", text: "Freight and asset markets move in cycles. Disciplined timing of acquisition, employment and exit is where value is made." },
+];
+
+const principles = [
+  { title: "Asset-backed", text: "Exposure anchored in quality vessels with transparent, verifiable value." },
+  { title: "Disciplined entry and exit", text: "Acquisitions priced against long-term value, with exit options considered from day one." },
+  { title: "Balanced employment", text: "A deliberate mix of period and spot exposure matched to each partner's risk appetite." },
+  { title: "Prudent leverage", text: "Capital structures designed to withstand the downside of the cycle, not just the upside." },
+  { title: "Diversification", text: "Spreading exposure across segments, counterparties and employment types where appropriate." },
+  { title: "Transparent reporting", text: "Regular, standardised reporting on earnings, costs, valuations and risk." },
+];
+
+const models = [
+  {
+    icon: "layers",
+    title: "Asset management mandates",
+    text: "For investors who own, or wish to own, vessels and want an experienced manager to oversee acquisition, employment, operations and exit.",
+  },
+  {
+    icon: "handshake",
+    title: "Co-investment & joint ventures",
+    text: "Project-based structures, typically single-purpose vehicles, where we partner with investors on specific vessel acquisitions with clearly aligned interests.",
+  },
+  {
+    icon: "commercial",
+    title: "Commercial management for owners",
+    text: "For existing owners who want to outsource chartering and commercial management while retaining full ownership and control.",
+  },
+];
+
+const steps = [
+  { title: "Introduction", text: "An initial, confidential discussion of objectives, horizon and risk appetite." },
+  { title: "Opportunity & structure", text: "We present opportunities, the proposed structure, financing and the business case." },
+  { title: "Due diligence", text: "Vessel inspection, valuation, legal and counterparty review, with full access to our analysis." },
+  { title: "Execution", text: "Acquisition, delivery and commencement of commercial and technical management." },
+  { title: "Ongoing stewardship", text: "Active management through the cycle, regular reporting and a planned exit strategy." },
+];
+
+const esg = [
+  {
+    icon: "leaf",
+    title: "Environmental",
+    points: [
+      "Fuel-efficient voyage planning and speed optimisation",
+      "EEXI, CII and EU ETS compliance built into commercial decisions",
+      "Preference for modern, energy-efficient tonnage",
+      "Responsible recycling in line with the Hong Kong Convention",
+    ],
+  },
+  {
+    icon: "people",
+    title: "Social",
+    points: [
+      "Seafarer welfare and fair employment through reputable crew managers",
+      "Safety as a non-negotiable standard for every service provider",
+      "Compliance with the Maritime Labour Convention",
+    ],
+  },
+  {
+    icon: "shield",
+    title: "Governance",
+    points: [
+      "Robust KYC, anti-bribery and sanctions screening",
+      "Clear segregation of client assets and conflicts-of-interest policy",
+      "Independent valuations and audited accounts for managed structures",
+    ],
+  },
+];
+---
+
+<Base title="Investors & Partners" description="How Maru Maritime partners with investors and ship owners: investment principles, partnership models, reporting and responsible shipping.">
+  <PageHero
+    eyebrow="Investors & partners"
+    title="For investors and owners."
+    lead="We work with investors, family offices and ship owners who want exposure to shipping, and want it managed carefully by people who tell them exactly how it is going."
+  />
+
+  <!-- Why maritime -->
+  <section class="section section--light">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Why maritime</span>
+        <h2 class="h2">Why shipping is worth a look.</h2>
+      </div>
+      <div class="grid grid--4">
+        {reasons.map((r, i) => (
+          <article class="card reason" data-reveal style={`--delay:${i * 0.08}s`}>
+            <span class="icon-badge"><Icon name={r.icon} /></span>
+            <h3 class="h3">{r.title}</h3>
+            <p class="muted">{r.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="section section--deep">
+    <div class="container principles">
+      <div class="principles__head" data-reveal>
+        <span class="eyebrow">Our investment framework</span>
+        <h2 class="h2">The rules we invest by.</h2>
+        <p class="lead">
+          Shipping rewards patience and punishes overconfidence. These rules are there to protect capital first;
+          the upside comes second.
+        </p>
+      </div>
+      <ul class="principles__list">
+        {principles.map((p, i) => (
+          <li data-reveal style={`--delay:${i * 0.06}s`}>
+            <span class="principles__n">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <h3>{p.title}</h3>
+              <p class="muted">{p.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Partnership models -->
+  <section class="section section--dark divider-top">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">Ways to partner</span>
+        <h2 class="h2">Ways we can work together.</h2>
+        <p class="lead">Every partner is different, so the structure follows what you want, not the other way round.</p>
+      </div>
+      <div class="grid grid--3">
+        {models.map((m, i) => (
+          <article class="card model" data-reveal style={`--delay:${i * 0.08}s`}>
+            <span class="icon-badge"><Icon name={m.icon} /></span>
+            <h3 class="h3">{m.title}</h3>
+            <p class="muted">{m.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section section--light">
+    <div class="container process">
+      <div class="process__head" data-reveal>
+        <span class="eyebrow">The partnership process</span>
+        <h2 class="h2">What the process looks like.</h2>
+        <p class="lead">No surprises: you see our analysis at every stage before anything is signed.</p>
+      </div>
+      <ol class="process__steps">
+        {steps.map((s, i) => (
+          <li data-reveal style={`--delay:${i * 0.06}s`}>
+            <span class="process__n">{i + 1}</span>
+            <div>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Reporting -->
+  <section class="section section--deep">
+    <div class="container reporting">
+      <div data-reveal>
+        <span class="eyebrow">Reporting & governance</span>
+        <h2 class="h2">You will always see what we see.</h2>
+        <p class="lead">
+          Transparency is the foundation of trust. Our partners receive clear, consistent information on the
+          performance and condition of their assets.
+        </p>
+      </div>
+      <div class="card reporting__card" data-reveal style="--delay:.1s">
+        <ul class="check-list">
+          <li>Monthly commercial and operating reports</li>
+          <li>Quarterly performance, valuation and market reviews</li>
+          <li>Annual audited financial statements for managed structures</li>
+          <li>Independent, broker-sourced vessel valuations</li>
+          <li>Budget-versus-actual cost reporting with commentary</li>
+          <li>Direct access to the management team</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESG -->
+  <section class="section section--dark divider-top">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Responsible shipping</span>
+        <h2 class="h2">Running ships responsibly.</h2>
+        <p class="lead">
+          Cleaner, safer, properly governed ships hold their value better and keep their crews safe. We treat that as
+          part of the job.
+        </p>
+      </div>
+      <div class="grid grid--3">
+        {esg.map((e, i) => (
+          <article class="card" data-reveal style={`--delay:${i * 0.08}s`}>
+            <span class="icon-badge"><Icon name={e.icon} /></span>
+            <h3 class="h3 esg__title">{e.title}</h3>
+            <ul class="check-list esg__list">
+              {e.points.map((p) => <li>{p}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+      <p class="disclaimer">
+        The information on this website is provided for general information only. It does not constitute an offer to
+        sell, or a solicitation of an offer to buy, any security or investment product, nor investment, legal or tax
+        advice. Any investment opportunity will be made available only through formal documentation and to eligible
+        investors in accordance with applicable law.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand secondary={{ href: "/services/", label: "Our services" }} title="Explore a partnership with us." text="We would welcome a confidential conversation about your objectives and how a maritime partnership could support them." />
+</Base>
+
+<style>
+  .reason .h3,
+  .model .h3 {
+    margin-bottom: 12px;
+  }
+  .reason .muted,
+  .model .muted {
+    margin: 0;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(40px, 7vw, 112px);
+  }
+  .principles__head {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+    align-self: start;
+  }
+  .principles__head .lead {
+    margin-top: 22px;
+  }
+  .principles__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .principles__list li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 12px;
+    padding: 30px 0;
+    border-top: 1px solid var(--line-dark);
+  }
+  .principles__n {
+    font-family: var(--font-brand);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold-500);
+    padding-top: 6px;
+  }
+  .principles__list h3 {
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .principles__list .muted {
+    margin: 0;
+    font-size: 15.5px;
+  }
+
+  .process {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(40px, 7vw, 112px);
+  }
+  .process__head .lead {
+    margin-top: 22px;
+  }
+  .process__steps {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .process__steps::before {
+    content: "";
+    position: absolute;
+    left: 23px;
+    top: 24px;
+    bottom: 24px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--gold-500), rgba(201, 162, 75, 0.2));
+  }
+  .process__steps li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 28px;
+    padding-bottom: 36px;
+  }
+  .process__steps li:last-child {
+    padding-bottom: 0;
+  }
+  .process__n {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--gold-500);
+    border-radius: 50%;
+    background: var(--ivory-100);
+    font-family: var(--font-brand);
+    font-weight: 600;
+    color: var(--gold-600);
+  }
+  .process__steps h3 {
+    margin: 8px 0 6px;
+    font-size: 26px;
+    font-weight: 600;
+  }
+  .process__steps p {
+    margin: 0;
+    color: var(--muted-on-light);
+  }
+
+  .reporting {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 7vw, 112px);
+    align-items: center;
+  }
+  .reporting .lead {
+    margin-top: 22px;
+  }
+  .reporting__card {
+    padding: clamp(32px, 4vw, 52px);
+  }
+  .reporting__card .check-list {
+    gap: 18px;
+    font-size: 17px;
+  }
+
+  .esg__title {
+    margin-bottom: 20px;
+  }
+  .esg__list {
+    font-size: 15.5px;
+    color: var(--muted-on-dark);
+  }
+  .disclaimer {
+    max-width: 90ch;
+    margin: 64px 0 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--line-dark);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted-on-dark);
+  }
+
+  @media (max-width: 960px) {
+    .principles,
+    .process,
+    .reporting {
+      grid-template-columns: 1fr;
+    }
+    .principles__head {
+      position: static;
+    }
+  }
+  @media (max-width: 640px) {
+    .principles__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

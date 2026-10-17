@@ -1,0 +1,47 @@
+---
+import ChartBackdrop from "./ChartBackdrop.astro";
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+const { eyebrow, title, lead } = Astro.props;
+---
+<section class="page-hero">
+  <ChartBackdrop cx={82} cy={30} />
+  <div class="page-hero__glow" aria-hidden="true"></div>
+  <div class="container page-hero__inner">
+    <span class="eyebrow" data-reveal>{eyebrow}</span>
+    <h1 class="display" data-reveal style="--delay:.08s" set:html={title} />
+    {lead && <p class="lead" data-reveal style="--delay:.16s">{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    padding: calc(var(--header-h) + clamp(72px, 10vw, 136px)) 0 clamp(72px, 9vw, 120px);
+    background: radial-gradient(120% 90% at 85% 0%, #12305a 0%, var(--navy-900) 45%, var(--navy-950) 100%);
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .page-hero__glow {
+    position: absolute;
+    right: -10%;
+    top: -30%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(233, 200, 115, 0.1), transparent 60%);
+    pointer-events: none;
+  }
+  .page-hero__inner {
+    position: relative;
+  }
+  .page-hero h1 {
+    max-width: 16ch;
+  }
+  .page-hero .lead {
+    margin-top: 28px;
+  }
+</style>

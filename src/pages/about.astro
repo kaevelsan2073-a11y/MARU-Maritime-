@@ -1,0 +1,332 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+
+const values = [
+  { icon: "anchor", title: "Trust", text: "We earn confidence through integrity, discretion and doing exactly what we say we will do." },
+  { icon: "compass", title: "Excellence", text: "We hold our commercial and operational work to the highest professional standard." },
+  { icon: "scale", title: "Discipline", text: "We are rigorous with capital, risk and cost, especially when markets tempt otherwise." },
+  { icon: "doc", title: "Transparency", text: "Clear, timely and honest reporting, so our partners always see what we see." },
+  { icon: "handshake", title: "Partnership", text: "Our interests are aligned with those of the owners, investors and charterers we serve." },
+];
+
+const journey = [
+  {
+    phase: "Phase I",
+    title: "Foundation",
+    text: "Establishing the company, its governance framework and core commercial and chartering capability.",
+    status: "current",
+  },
+  {
+    phase: "Phase II",
+    title: "Partnerships",
+    text: "Building relationships with owners, investors, charterers, brokers and specialist service providers.",
+    status: "next",
+  },
+  {
+    phase: "Phase III",
+    title: "Assets under management",
+    text: "Taking on first commercial management mandates and developing a portfolio of managed vessels.",
+    status: "next",
+  },
+  {
+    phase: "Phase IV",
+    title: "Scale",
+    text: "Expanding across segments and geographies while keeping the discipline that defines us.",
+    status: "next",
+  },
+];
+---
+
+<Base title="About" description="About Maru Maritime: a maritime asset management and chartering platform founded by Jatinder Sandhu.">
+  <PageHero
+    eyebrow="About us"
+    title="A new company, started for a simple reason."
+    lead="Owners and investors should have a commercial manager who looks after their ships the way they would themselves. That is the company Jatinder Sandhu set out to build."
+  />
+
+  <!-- Story -->
+  <section class="section section--light">
+    <div class="container story">
+      <div data-reveal>
+        <span class="eyebrow">Our story</span>
+        <h2 class="h2">Why Maru Maritime exists.</h2>
+      </div>
+      <div class="story__text" data-reveal style="--delay:.1s">
+        <p class="lead">
+          Shipping is a hard business. Freight rates swing, costs creep, and the gap between a well-run ship and an
+          average one shows up directly in what the owner earns.
+        </p>
+        <p>
+          {site.founder} founded {site.name} to close that gap. We are a maritime asset management and services
+          company, and most of our attention goes to the commercial side: chartering, employment and making sure each
+          voyage pays what it should.
+        </p>
+        <p>
+          We are a young company and we are not rushing. The relationships, controls and reporting come first, so
+          that when we take on a ship it gets our full attention from the first day.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission / Vision -->
+  <section class="section section--deep">
+    <div class="container grid grid--2 mv">
+      <article class="card mv__card" data-reveal>
+        <span class="eyebrow">Our mission</span>
+        <p class="mv__statement">
+          To get the best possible result from every ship we look after, and to be straight with the people who own
+          them about how it is going.
+        </p>
+      </article>
+      <article class="card mv__card" data-reveal style="--delay:.1s">
+        <span class="eyebrow">Our vision</span>
+        <p class="mv__statement">
+          To be the firm owners and investors call first, because they know we will be careful with their money and
+          honest about the market.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section section--dark divider-top">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Our values</span>
+        <h2 class="h2">What we stand for.</h2>
+        <p class="lead">Five things we expect of ourselves, whoever the client is and whatever the market is doing.</p>
+      </div>
+      <div class="values">
+        {values.map((v, i) => (
+          <article class="values__item" data-reveal style={`--delay:${i * 0.07}s`}>
+            <span class="icon-badge"><Icon name={v.icon} /></span>
+            <h3 class="h3">{v.title}</h3>
+            <p class="muted">{v.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership -->
+  <section class="section section--light" id="leadership">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Leadership</span>
+        <h2 class="h2">Who runs the company.</h2>
+      </div>
+      <article class="leader" data-reveal>
+        <div class="leader__portrait" aria-hidden="true">
+          <span>JS</span>
+        </div>
+        <div class="leader__body">
+          <h3 class="leader__name">{site.founder}</h3>
+          <p class="leader__role">Founder</p>
+          <p class="leader__bio">
+            {site.founder} founded {site.name} and leads the business day to day, from commercial strategy to
+            relationships with owners, investors and charterers.
+          </p>
+          <p class="placeholder-note">Full biography and portrait to be added</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Journey -->
+  <section class="section section--deep">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Our journey</span>
+        <h2 class="h2">Where we are today.</h2>
+        <p class="lead">
+          We would rather be upfront: Maru Maritime is a new company. Here is what we are working on now and what
+          comes next.
+        </p>
+      </div>
+      <ol class="journey">
+        {journey.map((j, i) => (
+          <li class:list={["journey__item", { "is-current": j.status === "current" }]} data-reveal style={`--delay:${i * 0.08}s`}>
+            <span class="journey__marker"></span>
+            <span class="journey__phase">{j.phase}{j.status === "current" && <em> · In progress</em>}</span>
+            <h3 class="h3">{j.title}</h3>
+            <p class="muted">{j.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .story {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(40px, 7vw, 112px);
+  }
+  .story__text .lead {
+    color: var(--text-on-light);
+    margin-bottom: 24px;
+  }
+  .story__text p:not(.lead) {
+    color: var(--muted-on-light);
+  }
+
+  .mv__card {
+    padding: clamp(36px, 4vw, 56px);
+  }
+  .mv__statement {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.6vw, 34px);
+    line-height: 1.3;
+  }
+
+  .values {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid var(--line-dark);
+  }
+  .values__item {
+    padding: 40px 28px 8px 0;
+  }
+  .values__item + .values__item {
+    padding-left: 28px;
+    border-left: 1px solid var(--line-dark);
+  }
+  .values__item .h3 {
+    margin-bottom: 12px;
+  }
+  .values__item .muted {
+    font-size: 15.5px;
+  }
+
+  .leader {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    padding: clamp(28px, 4vw, 48px);
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius);
+    background: var(--ivory-50);
+  }
+  .leader__portrait {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+    background:
+      radial-gradient(circle at 50% 35%, rgba(233, 200, 115, 0.25), transparent 60%),
+      linear-gradient(160deg, var(--navy-800), var(--navy-950));
+  }
+  .leader__portrait span {
+    font-family: var(--font-brand);
+    font-size: 64px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    background: var(--gold-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .leader__name {
+    font-size: clamp(34px, 3.4vw, 46px);
+  }
+  .leader__role {
+    margin: 8px 0 22px;
+    font-family: var(--font-brand);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold-600);
+  }
+  .leader__bio {
+    max-width: 60ch;
+    font-size: 18px;
+    color: var(--muted-on-light);
+  }
+
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .journey__item {
+    position: relative;
+    padding-top: 40px;
+    border-top: 1px solid var(--line-dark-strong);
+  }
+  .journey__marker {
+    position: absolute;
+    top: -7px;
+    left: 0;
+    width: 13px;
+    height: 13px;
+    border: 1px solid var(--gold-500);
+    border-radius: 50%;
+    background: var(--navy-950);
+  }
+  .is-current .journey__marker {
+    background: var(--gold-400);
+    box-shadow: 0 0 0 6px rgba(233, 200, 115, 0.15);
+  }
+  .journey__phase {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--font-brand);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-500);
+  }
+  .journey__phase em {
+    font-style: normal;
+    color: var(--gold-300);
+  }
+  .journey .h3 {
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 1080px) {
+    .values {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .values__item,
+    .values__item + .values__item {
+      padding: 32px 24px 8px 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .journey {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 48px;
+    }
+  }
+  @media (max-width: 860px) {
+    .story,
+    .leader {
+      grid-template-columns: 1fr;
+    }
+    .leader__portrait {
+      max-width: 240px;
+    }
+  }
+  @media (max-width: 560px) {
+    .values,
+    .journey {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

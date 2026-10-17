@@ -1,0 +1,58 @@
+---
+// Side-profile line drawings of the main commercial vessel types. Bow faces right.
+interface Props {
+  type: "bulk" | "tanker" | "container" | "offshore";
+}
+const { type } = Astro.props;
+const hull = "M6 46 H234 L224 62 Q222 65 217 65 H24 Q18 65 15 61 Z";
+---
+<svg class="vessel" viewBox="0 0 240 80" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+  <path d="M0 72 Q 30 69 60 72 T 120 72 T 180 72 T 240 72" stroke-opacity=".35" />
+  {type === "offshore" ? (
+    <>
+      <path d="M6 48 H234 L228 62 Q226 65 221 65 H20 Q14 65 11 61 Z" />
+      <path d="M150 48 V26 H200 L212 36 V48" />
+      <path d="M158 26 V16 H192 V26" />
+      <path d="M176 16 V6" />
+      <path d="M162 34 H204 M14 48 V42 H140 V48" stroke-opacity=".6" />
+    </>
+  ) : (
+    <path d={hull} />
+  )}
+  {type === "bulk" && (
+    <>
+      <path d="M20 46 V22 H50 V46" /><path d="M26 22 V14 H44 V22" /><path d="M32 14 V8" />
+      {[62, 92, 122, 152, 182].map((x) => <path d={`M${x} 46 V40 H${x + 24} V46`} />)}
+      {[86, 146].map((x) => <path d={`M${x} 46 V24 L${x + 14} 34`} stroke-opacity=".7" />)}
+      <path d="M212 46 V40 H226" />
+    </>
+  )}
+  {type === "tanker" && (
+    <>
+      <path d="M20 46 V22 H50 V46" /><path d="M26 22 V14 H44 V22" /><path d="M32 14 V8" />
+      <path d="M58 42 H214" stroke-opacity=".7" />
+      <path d="M120 42 V34 H136 V42 M128 34 V28" />
+      <path d="M216 46 V38 H228" />
+      <path d="M70 46 V42 M100 46 V42 M160 46 V42 M190 46 V42" stroke-opacity=".6" />
+    </>
+  )}
+  {type === "container" && (
+    <>
+      <path d="M22 46 V16 H48 V46" /><path d="M28 16 V8 H42 V16" />
+      {[0, 1, 2].map((r) =>
+        [58, 76, 94, 112, 130, 148, 166, 184].map((x) => (
+          <rect x={x} y={38 - r * 8} width="16" height="8" stroke-opacity={r === 2 ? 0.55 : 0.85} />
+        )),
+      )}
+      <path d="M206 46 V38 H226" />
+    </>
+  )}
+</svg>
+
+<style>
+  .vessel {
+    width: 100%;
+    height: auto;
+    color: var(--gold-400);
+  }
+</style>

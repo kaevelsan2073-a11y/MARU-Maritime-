@@ -1,0 +1,265 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+
+const topics = [
+  "Commercial management",
+  "Chartering",
+  "Asset management",
+  "Turnkey maritime services",
+  "Investment & partnerships",
+  "Careers",
+  "Other",
+];
+---
+
+<Base title="Contact" description="Contact Maru Maritime about commercial management, chartering, asset management or investment partnerships.">
+  <PageHero
+    eyebrow="Contact"
+    title="Get in touch."
+    lead="Owner, investor, charterer or broker: if you think we could help, send us a note. We read everything and reply ourselves."
+  />
+
+  <section class="section section--light">
+    <div class="container contact">
+      <aside class="contact__details" data-reveal>
+        <span class="eyebrow">Get in touch</span>
+        <h2 class="h2">Talk to us directly.</h2>
+
+        <ul class="contact__list">
+          <li>
+            <span class="icon-badge"><Icon name="mail" /></span>
+            <div>
+              <h3>General enquiries</h3>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </div>
+          </li>
+          <li>
+            <span class="icon-badge"><Icon name="chartering" /></span>
+            <div>
+              <h3>Chartering desk</h3>
+              <a href={`mailto:${site.charteringEmail}`}>{site.charteringEmail}</a>
+            </div>
+          </li>
+          <li>
+            <span class="icon-badge"><Icon name="pin" /></span>
+            <div>
+              <h3>Office</h3>
+              <p>{site.office || "Address to be announced"}</p>
+            </div>
+          </li>
+        </ul>
+      </aside>
+
+      <form class="card contact__form" data-contact-form data-reveal style="--delay:.1s" novalidate>
+        <h3 class="contact__form-title">Send us a message</h3>
+        <div class="field-row">
+          <label class="field">
+            <span>Full name *</span>
+            <input name="name" type="text" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span>Company</span>
+            <input name="company" type="text" autocomplete="organization" />
+          </label>
+        </div>
+        <div class="field-row">
+          <label class="field">
+            <span>Email *</span>
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label class="field">
+            <span>Phone</span>
+            <input name="phone" type="tel" autocomplete="tel" />
+          </label>
+        </div>
+        <label class="field">
+          <span>Nature of enquiry *</span>
+          <select name="topic" required>
+            <option value="" disabled selected>Select a topic</option>
+            {topics.map((t) => <option>{t}</option>)}
+          </select>
+        </label>
+        <label class="field">
+          <span>Message *</span>
+          <textarea name="message" rows="6" required></textarea>
+        </label>
+        <label class="consent">
+          <input name="consent" type="checkbox" required />
+          <span>I agree that Maru Maritime may use these details to respond to my enquiry.</span>
+        </label>
+        <p class="form-error" data-form-error hidden>Please complete the required fields marked with *.</p>
+        <button type="submit" class="btn btn--navy">Send enquiry <Icon name="arrow" /></button>
+        <p class="form-note">Submitting opens your email application with your message ready to send.</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { site } from "../data/site";
+
+  // No form backend yet: compose the enquiry into an email to the company inbox.
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  const error = document.querySelector<HTMLElement>("[data-form-error]");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      error?.removeAttribute("hidden");
+      form.querySelector<HTMLElement>(":invalid")?.focus();
+      return;
+    }
+    error?.setAttribute("hidden", "");
+    const d = new FormData(form);
+    const subject = `Website enquiry: ${d.get("topic")}`;
+    const body = [
+      `Name: ${d.get("name")}`,
+      `Company: ${d.get("company") || "-"}`,
+      `Email: ${d.get("email")}`,
+      `Phone: ${d.get("phone") || "-"}`,
+      "",
+      String(d.get("message")),
+    ].join("\n");
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .contact__details .h2 {
+    margin-bottom: 40px;
+  }
+  .contact__list {
+    display: grid;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .contact__list li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .contact__list .icon-badge {
+    margin: 0;
+  }
+  .contact__list h3 {
+    margin-bottom: 4px;
+    font-family: var(--font-brand);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-600);
+  }
+  .contact__list a,
+  .contact__list p {
+    margin: 0;
+    font-size: 18px;
+    color: var(--text-on-light);
+    overflow-wrap: anywhere;
+  }
+  .contact__list a:hover {
+    color: var(--gold-600);
+  }
+
+  .contact__form {
+    display: grid;
+    gap: 22px;
+    padding: clamp(28px, 4vw, 52px);
+  }
+  .contact__form-title {
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  .field {
+    display: grid;
+    gap: 8px;
+  }
+  .field span {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-on-light);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius);
+    background: #fff;
+    color: var(--text-on-light);
+    font: inherit;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--gold-500);
+    box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.18);
+  }
+  .consent {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 12px;
+    align-items: start;
+    font-size: 14.5px;
+    color: var(--muted-on-light);
+  }
+  .consent input {
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    accent-color: var(--navy-900);
+  }
+  .form-error {
+    margin: 0;
+    font-size: 14.5px;
+    color: #a3361f;
+  }
+  .contact__form .btn {
+    justify-self: start;
+  }
+  .form-note {
+    margin: -8px 0 0;
+    font-size: 13px;
+    color: var(--muted-on-light);
+  }
+
+  @media (max-width: 960px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+    .contact__form .btn {
+      justify-self: stretch;
+    }
+  }
+</style>

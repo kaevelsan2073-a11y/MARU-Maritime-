@@ -1,0 +1,59 @@
+---
+// Decorative portolan-style nautical chart: lat/long graticule, rhumb lines
+// radiating from a compass point, and depth-contour curves.
+interface Props {
+  cx?: number; // rhumb origin, % of width
+  cy?: number; // rhumb origin, % of height
+  class?: string;
+}
+const { cx = 74, cy = 46, class: cls } = Astro.props;
+const W = 1600, H = 900;
+const ox = (cx / 100) * W, oy = (cy / 100) * H;
+const rhumbs = Array.from({ length: 32 }, (_, i) => {
+  const a = (i * Math.PI * 2) / 32;
+  const L = 2200;
+  return { x: ox + Math.cos(a) * L, y: oy + Math.sin(a) * L, major: i % 4 === 0 };
+});
+const gx = Array.from({ length: 21 }, (_, i) => i * 80);
+const gy = Array.from({ length: 12 }, (_, i) => i * 80);
+---
+<svg class:list={["chart-backdrop", cls]} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <radialGradient id="cb-fade" cx={`${cx}%`} cy={`${cy}%`} r="70%">
+      <stop offset="0" stop-color="#fff" stop-opacity="1" />
+      <stop offset="1" stop-color="#fff" stop-opacity="0.15" />
+    </radialGradient>
+    <mask id="cb-mask"><rect width={W} height={H} fill="url(#cb-fade)" /></mask>
+  </defs>
+  <g mask="url(#cb-mask)">
+    <g stroke="#e9c873" stroke-opacity="0.07" stroke-width="1">
+      {gx.map((x) => <line x1={x} y1="0" x2={x} y2={H} />)}
+      {gy.map((y) => <line x1="0" y1={y} x2={W} y2={y} />)}
+    </g>
+    <g stroke="#e9c873" stroke-width="0.8">
+      {rhumbs.map((r) => <line x1={ox} y1={oy} x2={r.x} y2={r.y} stroke-opacity={r.major ? 0.16 : 0.07} />)}
+    </g>
+    <g fill="none" stroke="#e9c873" stroke-opacity="0.12">
+      <circle cx={ox} cy={oy} r="150" />
+      <circle cx={ox} cy={oy} r="158" stroke-dasharray="2 6" />
+      <circle cx={ox} cy={oy} r="320" stroke-opacity="0.08" />
+    </g>
+    <g fill="none" stroke="#9fb4d6" stroke-opacity="0.08" stroke-width="1">
+      <path d="M0 720 C 240 680 380 760 620 720 S 1000 640 1240 700 S 1500 760 1600 730" />
+      <path d="M0 760 C 260 720 420 800 660 760 S 1040 690 1260 740 S 1500 800 1600 780" />
+      <path d="M0 805 C 280 770 460 840 700 805 S 1060 740 1280 785 S 1500 840 1600 825" />
+      <path d="M0 160 C 200 200 340 120 560 150 S 900 230 1100 170" />
+      <path d="M0 120 C 220 160 360 80 580 110 S 920 190 1120 130" />
+    </g>
+  </g>
+</svg>
+
+<style>
+  .chart-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+</style>
