@@ -2,6 +2,7 @@
 // company; do not add claims that have not been provided by Maru Maritime.
 export const site = {
   name: "Maru Maritime",
+  legalName: "Maru Maritime LLC",
   tagline: "Anchored in Trust | Driven by Excellence",
   label: "Maritime Asset Management",
   // Company description, as provided by Maru Maritime.
