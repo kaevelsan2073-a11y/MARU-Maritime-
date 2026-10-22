@@ -7,7 +7,8 @@ const year = new Date().getFullYear();
     <div class="site-footer__top">
       <div class="site-footer__brand">
         <img src="/brand/logo-seal.svg" alt="Maru Maritime seal" width="168" height="168" loading="lazy" />
-        <p>{site.description}</p>
+        <p class="site-footer__name">{site.name}</p>
+        <p>{site.footerLine}</p>
       </div>
       <div class="site-footer__col">
         <h2>Company</h2>
@@ -20,7 +21,7 @@ const year = new Date().getFullYear();
       <div class="site-footer__col">
         <h2>What we do</h2>
         <ul>
-          {site.services.map((s, i) => <li><a href={`/services/#${site.serviceIds[i]}`}>{s}</a></li>)}
+          {site.footerServices.map((s, i) => <li><a href={`/services/#${site.serviceIds[i]}`}>{s}</a></li>)}
         </ul>
       </div>
       <div class="site-footer__col">
@@ -61,7 +62,17 @@ const year = new Date().getFullYear();
   }
   .site-footer__brand p {
     max-width: 40ch;
+    margin: 0;
     color: var(--muted-on-dark);
+  }
+  .site-footer__brand .site-footer__name {
+    margin-bottom: 8px;
+    font-family: var(--font-brand);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-on-dark);
   }
   .site-footer__col h2 {
     margin-bottom: 22px;

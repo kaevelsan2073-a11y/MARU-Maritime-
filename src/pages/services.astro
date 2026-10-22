@@ -12,14 +12,14 @@ const services = [
     kicker: "Throughout the life cycle of the ship",
     title: "Asset Management",
     intro:
-      "A ship is an investment as well as a working asset. We create opportunities in ship owning and manage vessels end to end: buying at the right price, financing sensibly, keeping the vessel in good condition and deciding when to sell.",
-    body: "Throughout, we report clearly on what the asset is worth, what it is earning and what it is costing.",
+      "A ship is an investment and a working asset. We create opportunities in ship owning and manage vessels end to end: buying opportunities, finance comparison, commercial fixing, and oversight of the technical manager, ensuring the vessel is kept in good condition to maximize its sale value.",
+    body: "Throughout the cycle, we keep a close eye on what the asset is worth, what it is earning and what it is costing.",
     points: [
       "Acquisition screening, vessel inspection and sale-and-purchase support",
       "Valuation monitoring and independent valuation coordination",
       "Financing and structuring: bank debt, leasing and joint ventures",
       "Budgeting, operating-cost control and capital expenditure planning",
-      "Fleet strategy, renewal and divestment timing",
+      "Strategy, renewal and divestment timing",
       "Investor reporting, governance and SPV administration",
     ],
   },
@@ -29,12 +29,12 @@ const services = [
     kicker: "Employment and earnings",
     title: "Commercial Management",
     intro:
-      "We take responsibility for how a ship earns: what employment it takes, how each voyage is run, and making sure the money actually comes in once the work is done.",
-    body: "We watch the market closely and measure ourselves against it. If a ship is underperforming, the owner hears it from us first, along with what we plan to do about it.",
+      "We take responsibility for a ship's earnings, whether on spot or time charter employment, ensuring maximum revenue and minimum downtime and off-hire.",
+    body: "We watch the market closely and benchmark ourselves against it. If a ship is underperforming, the owner hears from us first, along with our corrective strategy.",
     points: [
       "Employment strategy aligned with owner objectives and market outlook",
       "Freight market research, voyage estimation and earnings forecasting",
-      "Counterparty due diligence, credit assessment and KYC",
+      "Counterparty due diligence and KYC",
       "Post-fixture management: laytime, demurrage and claims handling",
       "Hire and freight invoicing, collection and reconciliation",
       "Bunker planning and procurement coordination",
@@ -47,15 +47,14 @@ const services = [
     kicker: "Connecting owners and charterers",
     title: "Chartering",
     intro:
-      "We find work for ships. That means talking to brokers and charterers, weighing the rate against the risk, and choosing business that suits the ship and the owner rather than just the highest number on the day.",
-    body: "The detail in a charter party matters. Speed and consumption warranties, trading limits, payment terms and off-hire clauses are where owners win or lose money, so we read every line.",
+      "We find the right voyage or time charter for your ships. That means talking to brokers and charterers, weighing the rate against the risk and the reopening position, and choosing business that suits the ship and the owner rather than just the highest number on the day.",
+    body: "The detail in a charter party matters. Speed and consumption warranties, trading limits, payment terms and off-hire clauses are where owners can be exposed.",
     points: [
       "Time charters, short and long term",
       "Voyage charters and spot market employment",
-      "Contracts of affreightment (COAs)",
       "Evaluation of pool participation and commercial partnerships",
-      "Fixture negotiation and charter party drafting and review",
-      "Broker network management and cargo sourcing",
+      "Fixture negotiation and review of charter party terms",
+      "Charterer and broker network management",
       "Period-versus-spot strategy through the freight cycle",
     ],
   },
@@ -64,11 +63,12 @@ const services = [
     icon: "turnkey",
     kicker: "One point of contact",
     title: "Turnkey Services",
+    jump: "Marine Services",
     intro:
-      "Some owners would rather not deal with five different companies. We coordinate everything a ship needs, from technical management to insurance, working with specialist providers we have chosen carefully.",
+      "Some owners would rather not deal with five different companies. We coordinate everything a ship needs, from technical management and dry docking to insurance, working with specialist providers we have chosen carefully.",
     body: "You get one number to call, and one team responsible if something goes wrong.",
     points: [
-      "Technical management oversight and ship-manager selection",
+      "Technical management oversight",
       "Crew management coordination",
       "Insurance placement: hull and machinery, P&I and FD&D",
       "Class, flag and regulatory compliance",
@@ -78,19 +78,13 @@ const services = [
   },
 ];
 
-const engagement = [
-  { icon: "search", title: "Listen", text: "We start with what you own, what you want from it and how much risk you are comfortable with." },
-  { icon: "compass", title: "Plan", text: "We agree a commercial plan with you, with targets we can both measure." },
-  { icon: "turnkey", title: "Run", text: "We handle chartering, operations and suppliers day to day." },
-  { icon: "report", title: "Report", text: "You get regular, plain-English reports on earnings, costs and value." },
-];
 ---
 
 <Base title="Services" description="Asset management, commercial management, chartering and turnkey services from Maru Maritime.">
   <PageHero eyebrow="Services" title="What we do." lead={site.description} image="/images/band.jpg" imagePosition="60% 50%">
     <nav class="jump" aria-label="Services on this page" data-reveal style="--delay:.24s">
       {services.map((s) => (
-        <a href={`#${s.id}`}><Icon name={s.icon} />{s.title}</a>
+        <a href={`#${s.id}`}><Icon name={s.icon} />{s.jump ?? s.title}</a>
       ))}
     </nav>
   </PageHero>
@@ -115,26 +109,6 @@ const engagement = [
       </div>
     </section>
   ))}
-
-  <section class="section section--dark divider-top">
-    <div class="container">
-      <div class="section-head section-head--center" data-reveal>
-        <span class="eyebrow">How we engage</span>
-        <h2 class="h2">How working with us goes.</h2>
-        <p class="lead">The same four steps for every client, so you always know where things stand.</p>
-      </div>
-      <ol class="grid grid--4 engage">
-        {engagement.map((e, i) => (
-          <li class="card" data-reveal style={`--delay:${i * 0.08}s`}>
-            <span class="engage__step">Step {i + 1}</span>
-            <span class="icon-badge"><Icon name={e.icon} /></span>
-            <h3 class="h3">{e.title}</h3>
-            <p class="muted">{e.text}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
 
   <CtaBand title="Discuss a mandate with us." text="Tell us about your vessels or your investment objectives, and we will show you how we would approach it." />
 </Base>
@@ -212,29 +186,6 @@ const engagement = [
   }
   .section--light .service__card .check-list {
     color: var(--text-on-light);
-  }
-
-  .engage {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .engage__step {
-    position: absolute;
-    top: 32px;
-    right: 32px;
-    font-family: var(--font-brand);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold-500);
-  }
-  .engage .h3 {
-    margin-bottom: 12px;
-  }
-  .engage .muted {
-    margin: 0;
   }
 
   @media (max-width: 960px) {

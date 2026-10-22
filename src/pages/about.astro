@@ -1,7 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
-import Bridge from "../components/Bridge.astro";
 import RelationshipMap from "../components/RelationshipMap.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
@@ -25,7 +24,10 @@ const values = [
     <div class="container about">
       <div class="about__text" data-reveal>
         <h2 class="h2">Who we are</h2>
-        <p class="lead">{site.description}</p>
+        <p class="lead">
+          We are an experienced team of former Master Mariners and Chief Engineers who have held corporate
+          leadership roles, working to generate value in the niche private maritime sector.
+        </p>
         <p class="lead">{site.relationships}</p>
       </div>
       <figure class="about__seal" data-reveal style="--delay:.1s">
@@ -40,15 +42,15 @@ const values = [
       <article class="card mv__card" data-reveal>
         <span class="eyebrow">Our mission</span>
         <p class="mv__statement">
-          To get the best possible result from every ship we look after, and to be straight with the people who own
-          them about how it is going.
+          To optimize results from every marine asset we manage, and deliver transparency to all its
+          stakeholders.
         </p>
       </article>
       <article class="card mv__card" data-reveal style="--delay:.1s">
         <span class="eyebrow">Our vision</span>
         <p class="mv__statement">
-          To be the firm owners and investors call first, because they know we will be careful with their money and
-          honest about the market.
+          To create an efficient marine investment vehicle for different marine asset classes, driving value for
+          our partners.
         </p>
       </article>
     </div>
@@ -60,7 +62,6 @@ const values = [
       <div class="section-head" data-reveal>
         <span class="eyebrow">Our values</span>
         <h2 class="h2">What we stand for.</h2>
-        <p class="lead">Five things we expect of ourselves, whoever the client is and whatever the market is doing.</p>
       </div>
       <div class="values">
         {values.map((v, i) => (
@@ -80,11 +81,8 @@ const values = [
       <div class="section-head" data-reveal>
         <h2 class="h2">Relationships and presence</h2>
       </div>
-      <div class="about-map" data-reveal style="--delay:.1s">
+      <div data-reveal style="--delay:.1s">
         <RelationshipMap />
-      </div>
-      <div class="about-bridge" data-reveal style="--delay:.15s">
-        <Bridge />
       </div>
     </div>
   </section>
@@ -150,13 +148,6 @@ const values = [
     font-size: 15.5px;
   }
 
-  .about-map {
-    margin-bottom: clamp(48px, 6vw, 80px);
-  }
-  .about-bridge {
-    padding-top: clamp(40px, 5vw, 64px);
-    border-top: 1px solid var(--line-dark);
-  }
   .tagline {
     text-align: center;
   }

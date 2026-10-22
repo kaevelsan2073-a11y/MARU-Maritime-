@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import Bridge from "../components/Bridge.astro";
 import Lifecycle from "../components/Lifecycle.astro";
 import RelationshipMap from "../components/RelationshipMap.astro";
 import CtaBand from "../components/CtaBand.astro";
@@ -9,16 +8,16 @@ import { site } from "../data/site";
 
 const principles = [
   {
-    title: "Treat every ship as an investment",
-    text: "Someone's capital is tied up in that hull. We look after its condition, its value and its reputation as carefully as its earnings.",
+    title: "Treat every ship as an investment project",
+    text: "Someone's capital is tied up in that hull. We oversee its condition and maintenance as carefully as its earnings.",
   },
   {
-    title: "Run a tight operation",
-    text: "Good voyages are planned properly, cost what they should and get paid on time. Small things, done every day, add up.",
+    title: "Run a tight ship",
+    text: "Quality work and operations are planned, and in case of an unfortunate breakdown, we can make the judgment call that only comes with experience. Small things, done every day, add up.",
   },
   {
     title: "Think in years, not fixtures",
-    text: "Freight markets move in cycles. We make decisions with the owner's whole holding period in mind, not just the next charter.",
+    text: "Freight markets move in cycles. We make decisions with the owner's whole holding period in mind, whether on spot or period time charter.",
   },
 ];
 
@@ -39,7 +38,7 @@ const lifecycle = [
     <img class="hero__photo" src="/images/hero.jpg" alt="" fetchpriority="high" />
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="container hero__inner">
-      <h1 class="display" data-reveal style="--delay:.08s">End-to-end asset management across the life of the ship.</h1>
+      <h1 class="display" data-reveal style="--delay:.08s">End-to-End asset management across the life of the ship</h1>
       <p class="lead" data-reveal style="--delay:.16s">{site.description}</p>
       <div class="hero__actions" data-reveal style="--delay:.24s">
         <a href="#what-we-do" class="btn btn--gold">What we do <Icon name="arrow" /></a>
@@ -82,9 +81,6 @@ const lifecycle = [
       </div>
       <div class="gap-map" data-reveal style="--delay:.1s">
         <RelationshipMap />
-      </div>
-      <div class="gap-bridge" data-reveal style="--delay:.15s">
-        <Bridge />
       </div>
     </div>
   </section>
@@ -250,11 +246,7 @@ const lifecycle = [
 
   /* Bridging the gap */
   .gap-map {
-    margin: 8px 0 clamp(48px, 6vw, 80px);
-  }
-  .gap-bridge {
-    padding-top: clamp(40px, 5vw, 64px);
-    border-top: 1px solid var(--line-dark);
+    margin-top: 8px;
   }
 
   .wwd__list a {

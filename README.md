@@ -24,14 +24,14 @@ src/
   data/site.ts      company details, contact emails and navigation, edited in one place
   styles/global.css design tokens (navy/gold palette, type scale) and shared components
   layouts/Base.astro  page shell: <head>, header, footer, scroll-reveal script
-  components/       Header, Footer, PageHero, CtaBand, Bridge, ChartBackdrop, Icon
+  components/       Header, Footer, PageHero, CtaBand, RelationshipMap, Lifecycle, ChartBackdrop, Icon
   pages/            index (Home), about, services, investors, contact, legal, 404
 ```
 
 ## Content rules
 
 All company information lives in `src/data/site.ts` and comes from Maru Maritime directly: the company
-description, relationships (Japan, Korea, China), presence (United States, CT), services in priority order,
+description, relationships (Japan, Korea, India, China), presence (United States, CT), services in priority order,
 contact email and the investment disclaimer. The Services, Investors & Partners, principles, lifecycle, mission,
 vision and values sections are general descriptions approved by the company. Do not add figures, track record,
 vessel counts or specific commitments (e.g. reporting frequency, audited accounts) unless the company confirms them. The website handles no transactions; the contact form only opens an

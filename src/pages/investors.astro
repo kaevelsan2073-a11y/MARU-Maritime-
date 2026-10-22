@@ -8,7 +8,7 @@ const reasons = [
   { icon: "globe", title: "Essential to world trade", text: "Shipping carries the large majority of global trade by volume. Demand is tied to fundamental flows of energy, raw materials and goods." },
   { icon: "asset", title: "Real, tangible assets", text: "Vessels are hard assets with second-hand and scrap values, offering a different risk profile from purely financial exposures." },
   { icon: "commercial", title: "Income-generating", text: "Ships earn freight and hire. Employment strategy determines how much of that income is secured and for how long." },
-  { icon: "horizon", title: "Cyclical opportunity", text: "Freight and asset markets move in cycles. Disciplined timing of acquisition, employment and exit is where value is made." },
+  { icon: "horizon", title: "Cyclical opportunity", text: "Freight and asset markets move in cycles. Disciplined timing of acquisition, employment, financial structuring and exit is where value gets defined." },
 ];
 
 const principles = [
@@ -17,7 +17,7 @@ const principles = [
   { title: "Balanced employment", text: "A deliberate mix of period and spot exposure matched to each partner's risk appetite." },
   { title: "Prudent leverage", text: "Capital structures designed to withstand the downside of the cycle, not just the upside." },
   { title: "Diversification", text: "Spreading exposure across segments, counterparties and employment types where appropriate." },
-  { title: "Transparent reporting", text: "Regular, standardised reporting on earnings, costs, valuations and risk." },
+  { title: "Transparent reporting", text: "Regular, standardized reporting on earnings, costs, valuations and risk." },
 ];
 
 const models = [
@@ -34,16 +34,8 @@ const models = [
   {
     icon: "commercial",
     title: "Commercial management for owners",
-    text: "For existing owners who want to outsource chartering and commercial management while retaining full ownership and control.",
+    text: "For existing owners who want to outsource commercial management while retaining full ownership and control.",
   },
-];
-
-const steps = [
-  { title: "Introduction", text: "An initial, confidential discussion of objectives, horizon and risk appetite." },
-  { title: "Opportunity & structure", text: "We present opportunities, the proposed structure, financing and the business case." },
-  { title: "Due diligence", text: "Vessel inspection, valuation, legal and counterparty review, with full access to our analysis." },
-  { title: "Execution", text: "Acquisition, delivery and commencement of commercial and technical management." },
-  { title: "Ongoing stewardship", text: "Active management through the cycle, regular reporting and a planned exit strategy." },
 ];
 
 const esg = [
@@ -51,7 +43,7 @@ const esg = [
     icon: "leaf",
     title: "Environmental",
     points: [
-      "Fuel-efficient voyage planning and speed optimisation",
+      "Fuel-efficient voyage planning and speed optimization",
       "EEXI, CII and EU ETS compliance built into commercial decisions",
       "Preference for modern, energy-efficient tonnage",
       "Responsible recycling in line with the Hong Kong Convention",
@@ -84,7 +76,7 @@ const esg = [
     image="/images/hero.jpg"
     imagePosition="85% 60%"
     title="For investors and owners."
-    lead="We work with investors, family offices and ship owners who want exposure to shipping, and want it managed carefully by people who tell them exactly how it is going."
+    lead="We work with investors, family offices and ship owners who want exposure to shipping, and want their assets managed professionally with a very competitive fee structure."
   />
 
   <!-- Why maritime -->
@@ -113,7 +105,7 @@ const esg = [
         <span class="eyebrow">Our investment framework</span>
         <h2 class="h2">The rules we invest by.</h2>
         <p class="lead">
-          Shipping rewards patience and punishes overconfidence. These rules are there to protect capital first;
+          Shipping rewards the patient and punishes overconfidence. These rules are there to protect capital first;
           the upside comes second.
         </p>
       </div>
@@ -137,7 +129,7 @@ const esg = [
       <div class="section-head section-head--center" data-reveal>
         <span class="eyebrow">Ways to partner</span>
         <h2 class="h2">Ways we can work together.</h2>
-        <p class="lead">Every partner is different, so the structure follows what you want, not the other way round.</p>
+        <p class="lead">Every partner's needs are different, and the structure follows them.</p>
       </div>
       <div class="grid grid--3">
         {models.map((m, i) => (
@@ -151,34 +143,12 @@ const esg = [
     </div>
   </section>
 
-  <!-- Process -->
-  <section class="section section--light">
-    <div class="container process">
-      <div class="process__head" data-reveal>
-        <span class="eyebrow">The partnership process</span>
-        <h2 class="h2">What the process looks like.</h2>
-        <p class="lead">No surprises: you see our analysis at every stage before anything is signed.</p>
-      </div>
-      <ol class="process__steps">
-        {steps.map((s, i) => (
-          <li data-reveal style={`--delay:${i * 0.06}s`}>
-            <span class="process__n">{i + 1}</span>
-            <div>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
   <!-- Reporting -->
   <section class="section section--deep">
     <div class="container reporting">
       <div data-reveal>
         <span class="eyebrow">Reporting & governance</span>
-        <h2 class="h2">You will always see what we see.</h2>
+        <h2 class="h2">You see what we see.</h2>
         <p class="lead">
           Transparency is the foundation of trust. Our partners receive clear, consistent information on the
           performance and condition of their assets.
@@ -203,8 +173,7 @@ const esg = [
         <span class="eyebrow">Responsible shipping</span>
         <h2 class="h2">Running ships responsibly.</h2>
         <p class="lead">
-          Cleaner, safer, properly governed ships hold their value better and keep their crews safe. We treat that as
-          part of the job.
+          Cleaner, safer, properly governed ships hold their value better and keep their crews safe.
         </p>
       </div>
       <div class="grid grid--3">
@@ -285,61 +254,6 @@ const esg = [
     font-size: 15.5px;
   }
 
-  .process {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: clamp(40px, 7vw, 112px);
-  }
-  .process__head .lead {
-    margin-top: 22px;
-  }
-  .process__steps {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .process__steps::before {
-    content: "";
-    position: absolute;
-    left: 23px;
-    top: 24px;
-    bottom: 24px;
-    width: 1px;
-    background: linear-gradient(180deg, var(--gold-500), rgba(201, 162, 75, 0.2));
-  }
-  .process__steps li {
-    position: relative;
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 28px;
-    padding-bottom: 36px;
-  }
-  .process__steps li:last-child {
-    padding-bottom: 0;
-  }
-  .process__n {
-    display: grid;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--gold-500);
-    border-radius: 50%;
-    background: var(--ivory-100);
-    font-family: var(--font-brand);
-    font-weight: 600;
-    color: var(--gold-600);
-  }
-  .process__steps h3 {
-    margin: 8px 0 6px;
-    font-size: 26px;
-    font-weight: 600;
-  }
-  .process__steps p {
-    margin: 0;
-    color: var(--muted-on-light);
-  }
-
   .reporting {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -376,7 +290,6 @@ const esg = [
 
   @media (max-width: 960px) {
     .principles,
-    .process,
     .reporting {
       grid-template-columns: 1fr;
     }

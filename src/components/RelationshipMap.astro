@@ -1,6 +1,6 @@
 ---
 // Pacific-centred map rendered to static SVG at build time (Natural Earth data via world-atlas,
-// public domain). Shows the company's relationships (Japan, Korea, China) and presence (United States, CT).
+// public domain). Shows the company's relationships (Japan, Korea, India, China) and presence (United States, CT).
 import { geoMercator, geoPath, geoGraticule10 } from "d3-geo";
 import { feature } from "topojson-client";
 import { presimplify, simplify, quantile } from "topojson-simplify";
@@ -14,14 +14,14 @@ const pre = presimplify(world as any);
 const topo = simplify(pre, quantile(pre, 0.6)) as any;
 const countries = (feature(topo, topo.objects.countries) as any).features as any[];
 
-// Frame: western China to the US east coast, centred on the Pacific.
+// Frame: India to the US east coast, centred on the Pacific.
 const projection = geoMercator().rotate([160, 0]);
 projection.fitExtent(
   [
     [10, 10],
     [W - 10, H - 10],
   ],
-  { type: "MultiPoint", coordinates: [[100, 16], [-64, 16], [100, 56], [-64, 56]] } as any,
+  { type: "MultiPoint", coordinates: [[60, 8], [-64, 8], [60, 56], [-64, 56]] } as any,
 );
 projection.clipExtent([
   [0, 0],
@@ -29,7 +29,7 @@ projection.clipExtent([
 ]);
 const path = geoPath(projection).digits(0);
 
-const RELATIONSHIP_IDS = new Set(["156", "392", "410"]); // China, Japan, South Korea
+const RELATIONSHIP_IDS = new Set(["156", "356", "392", "410"]); // China, India, Japan, South Korea
 const PRESENCE_ID = "840"; // United States
 
 // Highlight only the contiguous United States (not Alaska or Hawaii) as the presence.
@@ -59,7 +59,8 @@ const hub = place([-72.7, 41.6]); // Connecticut
 const asia = [
   { name: "Japan", at: place([138.6, 36.4]), dx: 18, dy: 6, anchor: "start" },
   { name: "Korea", at: place([127.9, 36.5]), dx: -4, dy: -18, anchor: "middle" },
-  { name: "China", at: place([114, 31.5]), dx: 6, dy: 40, anchor: "middle" },
+  { name: "India", at: place([78.9, 21.5]), dx: 0, dy: 40, anchor: "middle" },
+  { name: "China", at: place([108, 33]), dx: 6, dy: 40, anchor: "middle" },
 ];
 
 // Arcs drawn in screen space so they bow gracefully over the Pacific.
@@ -68,7 +69,8 @@ const arc = (from: [number, number], to: [number, number], lift: number) => {
   const my = Math.min(from[1], to[1]) - lift;
   return `M${from[0].toFixed(1)} ${from[1].toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${to[0].toFixed(1)} ${to[1].toFixed(1)}`;
 };
-const arcs = asia.map((a, i) => arc(hub, a.at, 250 - i * 55));
+// Longer routes bow higher so the arcs fan out without crossing.
+const arcs = asia.map((a) => arc(hub, a.at, Math.abs(hub[0] - a.at[0]) * 0.28));
 ---
 
 <figure class="rmap">
