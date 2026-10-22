@@ -4,7 +4,7 @@ import PageHero from "../components/PageHero.astro";
 import Icon from "../components/Icon.astro";
 import { site } from "../data/site";
 
-const topics = [...site.services, "Investors & partners", "General enquiry"];
+const topics = [...site.services, "Investors & partners", "General inquiry"];
 ---
 
 <Base title="Contact" description={`Contact Maru Maritime at ${site.email}.`}>
@@ -56,7 +56,7 @@ const topics = [...site.services, "Investors & partners", "General enquiry"];
           </label>
         </div>
         <label class="field">
-          <span>Nature of enquiry *</span>
+          <span>Nature of inquiry *</span>
           <select name="topic" required>
             <option value="" disabled selected>Select a topic</option>
             {topics.map((t) => <option>{t}</option>)}
@@ -68,10 +68,10 @@ const topics = [...site.services, "Investors & partners", "General enquiry"];
         </label>
         <label class="consent">
           <input name="consent" type="checkbox" required />
-          <span>I agree that Maru Maritime may use these details to respond to my enquiry. See our <a href="/legal/">Legal &amp; Privacy</a> page.</span>
+          <span>I agree that Maru Maritime may use these details to respond to my inquiry. See our <a href="/legal/">Legal &amp; Privacy</a> page.</span>
         </label>
         <p class="form-error" data-form-error hidden>Please complete the required fields marked with *.</p>
-        <button type="submit" class="btn btn--navy">Send enquiry <Icon name="arrow" /></button>
+        <button type="submit" class="btn btn--navy">Send inquiry <Icon name="arrow" /></button>
         <p class="form-note">Submitting opens your email application with your message ready to send.</p>
       </form>
     </div>
@@ -81,7 +81,7 @@ const topics = [...site.services, "Investors & partners", "General enquiry"];
 <script>
   import { site } from "../data/site";
 
-  // No form backend yet: compose the enquiry into an email to the company inbox.
+  // No form backend yet: compose the inquiry into an email to the company inbox.
   const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
   const error = document.querySelector<HTMLElement>("[data-form-error]");
   form?.addEventListener("submit", (e) => {
@@ -93,7 +93,7 @@ const topics = [...site.services, "Investors & partners", "General enquiry"];
     }
     error?.setAttribute("hidden", "");
     const d = new FormData(form);
-    const subject = `Website enquiry: ${d.get("topic")}`;
+    const subject = `Website inquiry: ${d.get("topic")}`;
     const body = [
       `Name: ${d.get("name")}`,
       `Company: ${d.get("company") || "-"}`,

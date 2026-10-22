@@ -59,11 +59,10 @@ const services = [
     ],
   },
   {
-    id: "turnkey-services",
+    id: "marine-services",
     icon: "turnkey",
     kicker: "One point of contact",
-    title: "Turnkey Services",
-    jump: "Marine Services",
+    title: "Marine Services",
     intro:
       "Some owners would rather not deal with five different companies. We coordinate everything a ship needs, from technical management and dry docking to insurance, working with specialist providers we have chosen carefully.",
     body: "You get one number to call, and one team responsible if something goes wrong.",
@@ -80,11 +79,11 @@ const services = [
 
 ---
 
-<Base title="Services" description="Asset management, commercial management, chartering and turnkey services from Maru Maritime.">
-  <PageHero eyebrow="Services" title="What we do." lead={site.description} image="/images/band.jpg" imagePosition="60% 50%">
+<Base title="Services" description="Asset management, commercial management, chartering and marine services from Maru Maritime.">
+  <PageHero eyebrow="Services" title="What we do" lead={site.description} image="/images/band.jpg" imagePosition="60% 50%">
     <nav class="jump" aria-label="Services on this page" data-reveal style="--delay:.24s">
       {services.map((s) => (
-        <a href={`#${s.id}`}><Icon name={s.icon} />{s.jump ?? s.title}</a>
+        <a href={`#${s.id}`}><Icon name={s.icon} />{s.title}</a>
       ))}
     </nav>
   </PageHero>
@@ -110,7 +109,7 @@ const services = [
     </section>
   ))}
 
-  <CtaBand title="Discuss a mandate with us." text="Tell us about your vessels or your investment objectives, and we will show you how we would approach it." />
+  <CtaBand title="Discuss a mandate with us" text="Tell us about your vessels or your investment objectives, and we will show you how we would approach it." />
 </Base>
 
 <style>

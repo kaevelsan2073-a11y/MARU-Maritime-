@@ -1,0 +1,340 @@
+---
+// The shipping market cycle: a navy dial with the stages numbered clockwise around it, and the
+// four phases listed beside it (Recovery and Boom above the line, Decline and Trough below).
+export interface Phase {
+  name: string;
+  market: string;
+  stages: string[];
+}
+interface Props {
+  phases: Phase[];
+}
+const { phases } = Astro.props;
+
+const S = 560;
+const C = S / 2;
+const DISC = 262;
+const RING = 205;
+const ARROW = 120;
+const stages = phases.flatMap((p) => p.stages);
+const n = stages.length;
+
+// Screen position for an angle in degrees (0 = right, 90 = top).
+const at = (deg: number, r: number) => {
+  const a = (deg * Math.PI) / 180;
+  return [C + r * Math.cos(a), C - r * Math.sin(a)];
+};
+const f = (v: number) => v.toFixed(1);
+
+// Stages run clockwise from just above the left-hand side, so the first half sits above the line.
+const nodes = stages.map((_, i) => {
+  const [x, y] = at(180 - (i + 0.5) * (360 / n), RING);
+  return { x, y, up: i < n / 2 };
+});
+
+// Compass-bezel ticks around the edge of the dial.
+const ticks = Array.from({ length: 72 }, (_, i) => {
+  const deg = i * 5;
+  const major = i % 18 === 0;
+  const [x1, y1] = at(deg, DISC - 8);
+  const [x2, y2] = at(deg, DISC - (major ? 22 : 14));
+  return { d: `M${f(x1)} ${f(y1)}L${f(x2)} ${f(y2)}`, major };
+});
+
+const arc = (from: number, to: number, r: number) => {
+  const [x0, y0] = at(from, r);
+  const [x1, y1] = at(to, r);
+  return `M${f(x0)} ${f(y0)} A${r} ${r} 0 0 1 ${f(x1)} ${f(y1)}`;
+};
+const upperRing = arc(180, 0, RING);
+const lowerRing = arc(0, -180, RING);
+const upperArrow = arc(160, 20, ARROW);
+const lowerArrow = arc(-20, -160, ARROW);
+
+let count = 0;
+const numbered = phases.map((p) => ({ ...p, stages: p.stages.map((s) => ({ n: ++count, text: s })) }));
+const pad = (i: number) => String(i).padStart(2, "0");
+---
+
+<div class="scycle">
+  <div class="scycle__dial" data-reveal>
+    <svg viewBox={`0 0 ${S} ${S}`} role="img" aria-label={`The shipping cycle: ${stages.join(", ")}, then back to the start.`}>
+      <defs>
+        <marker id="scycle-head" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 0 L10 5 L0 10 z" fill="#f3d98b" />
+        </marker>
+        <radialGradient id="scycle-disc" cx="50%" cy="40%" r="60%">
+          <stop offset="0" stop-color="#183563" />
+          <stop offset="1" stop-color="#0a1b33" />
+        </radialGradient>
+      </defs>
+      <circle cx={C} cy={C} r={DISC} fill="url(#scycle-disc)" />
+      <circle cx={C} cy={C} r={DISC - 4} class="scycle__bezel" />
+      {ticks.map((t) => <path d={t.d} class:list={["scycle__tick", { "scycle__tick--major": t.major }]} />)}
+
+      <image href="/brand/logo-emblem.svg" x={C - 105} y={C - 105} width="210" height="210" class="scycle__mark" />
+
+      <path d={`M${C - DISC} ${C}H${C - ARROW - 18}M${C + ARROW + 18} ${C}H${C + DISC}`} class="scycle__line" />
+      <path d={upperRing} class="scycle__ring" />
+      <path d={lowerRing} class="scycle__ring scycle__ring--down" />
+      <path d={upperArrow} class="scycle__arrow" marker-end="url(#scycle-head)" />
+      <path d={lowerArrow} class="scycle__arrow" marker-end="url(#scycle-head)" />
+
+      <text x={C} y={C - 146} text-anchor="middle" class="scycle__market">Rising market</text>
+      <text x={C} y={C + 158} text-anchor="middle" class="scycle__market">Falling market</text>
+
+      <text x={C} y={C - 34} text-anchor="middle" class="scycle__the">The</text>
+      <text x={C} y={C + 8} text-anchor="middle" class="scycle__title">Shipping</text>
+      <text x={C} y={C + 48} text-anchor="middle" class="scycle__title">Cycle</text>
+
+      {nodes.map((p, i) => (
+        <g class:list={["scycle__node", { "scycle__node--down": !p.up }]}>
+          <circle cx={f(p.x)} cy={f(p.y)} r="17" />
+          <text x={f(p.x)} y={f(p.y + 4.5)} text-anchor="middle">{pad(i + 1)}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+
+  {numbered.map((p, i) => (
+    <article class={`scycle__phase scycle__phase--${i}`} data-reveal style={`--delay:${0.08 + i * 0.06}s`}>
+      <span class="scycle__tag">{p.market}</span>
+      <h3>{p.name}</h3>
+      <ol>
+        {p.stages.map((s) => (
+          <li>
+            <span class="scycle__n">{pad(s.n)}</span>
+            <span>{s.text}</span>
+          </li>
+        ))}
+      </ol>
+    </article>
+  ))}
+</div>
+
+<style>
+  .scycle {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 520px) minmax(0, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "p0 dial p1"
+      "p3 dial p2";
+    column-gap: clamp(28px, 3.5vw, 56px);
+  }
+  /* The horizontal divide between the rising and falling market, carried across the whole diagram. */
+  .scycle::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-500) 12%, var(--gold-500) 88%, transparent);
+  }
+  .scycle__dial {
+    grid-area: dial;
+    position: relative;
+    align-self: center;
+  }
+  .scycle__dial svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 30px 50px rgba(6, 15, 30, 0.22));
+  }
+  .scycle__bezel {
+    fill: none;
+    stroke: rgba(233, 200, 115, 0.55);
+    stroke-width: 1.2;
+  }
+  .scycle__tick {
+    stroke: rgba(233, 200, 115, 0.35);
+    stroke-width: 1;
+  }
+  .scycle__tick--major {
+    stroke: var(--gold-400);
+    stroke-width: 2;
+  }
+  .scycle__mark {
+    opacity: 0.08;
+  }
+  .scycle__line {
+    stroke: var(--gold-500);
+    stroke-width: 1.5;
+  }
+  .scycle__ring {
+    fill: none;
+    stroke: var(--gold-400);
+    stroke-width: 1.5;
+  }
+  .scycle__ring--down {
+    stroke: rgba(233, 200, 115, 0.55);
+    stroke-dasharray: 4 6;
+  }
+  .scycle__arrow {
+    fill: none;
+    stroke: var(--gold-300);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .scycle__market {
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    fill: var(--muted-on-dark);
+  }
+  .scycle__the {
+    font-family: var(--font-brand);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    fill: var(--gold-400);
+  }
+  .scycle__title {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 600;
+    fill: var(--text-on-dark);
+  }
+  .scycle__node circle {
+    fill: var(--gold-400);
+    stroke: var(--navy-900);
+    stroke-width: 3;
+  }
+  .scycle__node text {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    fill: var(--navy-900);
+  }
+  .scycle__node--down circle {
+    fill: var(--navy-900);
+    stroke: var(--gold-500);
+    stroke-width: 1.5;
+  }
+  .scycle__node--down text {
+    fill: var(--gold-300);
+  }
+
+  .scycle__phase {
+    position: relative;
+    background: var(--ivory-100);
+  }
+  .scycle__phase--0 {
+    grid-area: p0;
+  }
+  .scycle__phase--1 {
+    grid-area: p1;
+  }
+  .scycle__phase--2 {
+    grid-area: p2;
+  }
+  .scycle__phase--3 {
+    grid-area: p3;
+  }
+  .scycle__phase--0,
+  .scycle__phase--1 {
+    align-self: end;
+    padding-bottom: 36px;
+  }
+  .scycle__phase--2,
+  .scycle__phase--3 {
+    align-self: start;
+    padding-top: 36px;
+  }
+  /* Phases on the left read towards the dial. */
+  .scycle__phase--0,
+  .scycle__phase--3 {
+    text-align: right;
+  }
+  .scycle__tag {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-600);
+  }
+  .scycle__phase h3 {
+    margin-bottom: 14px;
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .scycle__phase ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-light);
+  }
+  .scycle__phase li {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 8px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line-light);
+    font-size: 15.5px;
+    line-height: 1.45;
+    color: var(--text-on-light);
+  }
+  .scycle__phase--0 li,
+  .scycle__phase--3 li {
+    grid-template-columns: 1fr 34px;
+  }
+  .scycle__phase--0 .scycle__n,
+  .scycle__phase--3 .scycle__n {
+    order: 2;
+  }
+  .scycle__n {
+    padding-top: 2px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--gold-600);
+  }
+
+  @media (max-width: 1080px) {
+    .scycle {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "dial dial"
+        "p0 p1"
+        "p2 p3";
+      gap: 40px clamp(24px, 4vw, 48px);
+    }
+    .scycle::before {
+      display: none;
+    }
+    .scycle__dial {
+      width: min(100%, 520px);
+      justify-self: center;
+    }
+    .scycle__phase--0,
+    .scycle__phase--1,
+    .scycle__phase--2,
+    .scycle__phase--3 {
+      align-self: start;
+      padding: 0;
+      text-align: left;
+    }
+    .scycle__phase--0 li,
+    .scycle__phase--3 li {
+      grid-template-columns: 34px 1fr;
+    }
+    .scycle__phase--0 .scycle__n,
+    .scycle__phase--3 .scycle__n {
+      order: 0;
+    }
+  }
+  @media (max-width: 640px) {
+    .scycle {
+      grid-template-columns: 1fr;
+      grid-template-areas: "dial" "p0" "p1" "p2" "p3";
+    }
+  }
+</style>

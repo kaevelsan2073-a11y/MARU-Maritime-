@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import Lifecycle from "../components/Lifecycle.astro";
+import ShippingCycle from "../components/ShippingCycle.astro";
 import RelationshipMap from "../components/RelationshipMap.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
@@ -21,13 +21,37 @@ const principles = [
   },
 ];
 
-const lifecycle = [
-  ["Buy", "Finding the right vessel, inspecting it and negotiating the price."],
-  ["Finance", "Setting up the ownership structure and the right level of debt."],
-  ["Charter", "Securing employment that fits the market and the owner."],
-  ["Operate", "Running voyages, overseeing technical management and controlling costs."],
-  ["Report", "Regular numbers on earnings, costs and value, in plain language."],
-  ["Sell", "Choosing the moment to exit, or renewing the fleet."],
+const cycle = [
+  {
+    name: "Recovery",
+    market: "Rising market",
+    stages: [
+      "Uneconomic ships are scrapped",
+      "Vessel supply and demand improve",
+      "Cash flow increases",
+      "Debt is paid down quickly",
+    ],
+  },
+  {
+    name: "Boom",
+    market: "Rising market",
+    stages: ["Ship values increase", "IPO markets open", "Bond markets open", "New ships are delivered"],
+  },
+  {
+    name: "Decline",
+    market: "Falling market",
+    stages: ["Vessel supply exceeds demand", "The spot market weakens", "Ship values decline", "Some charterers default"],
+  },
+  {
+    name: "Trough",
+    market: "Falling market",
+    stages: [
+      "Debt is restructured",
+      "Capital markets open: private equity and preferred",
+      "Strong companies consolidate",
+      "Investors order new ships",
+    ],
+  },
 ];
 
 ---
@@ -38,7 +62,7 @@ const lifecycle = [
     <img class="hero__photo" src="/images/hero.jpg" alt="" fetchpriority="high" />
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="container hero__inner">
-      <h1 class="display" data-reveal style="--delay:.08s">End-to-End asset management across the life of the ship</h1>
+      <h1 class="display" data-reveal style="--delay:.08s">End-to-end asset management across the life of the ship</h1>
       <p class="lead" data-reveal style="--delay:.16s">{site.description}</p>
       <div class="hero__actions" data-reveal style="--delay:.24s">
         <a href="#what-we-do" class="btn btn--gold">What we do <Icon name="arrow" /></a>
@@ -76,7 +100,7 @@ const lifecycle = [
   <section class="section section--deep">
     <div class="container">
       <div class="section-head" data-reveal>
-        <h2 class="h2">Bridging the gap between seller, buyer, operator and charterer.</h2>
+        <h2 class="h2">Bridging the gap between seller, buyer, operator and charterer</h2>
         <p class="lead">{site.relationships}</p>
       </div>
       <div class="gap-map" data-reveal style="--delay:.1s">
@@ -85,19 +109,17 @@ const lifecycle = [
     </div>
   </section>
 
-  <!-- ============ LIFECYCLE ============ -->
+  <!-- ============ SHIPPING CYCLE ============ -->
   <section class="section section--light">
     <div class="container">
-      <div class="section-head" data-reveal>
-        <h2 class="h2">From purchase to sale.</h2>
+      <div class="section-head section-head--center" data-reveal>
+        <h2 class="h2">The shipping cycle</h2>
         <p class="lead">
-          Owners can hand us a single job or the whole lifecycle. Either way, it is one team, so nothing gets lost
-          between hand-offs.
+          Freight and asset markets move in cycles. Where the market sits in the cycle shapes the right moment to
+          buy, how to employ a ship and when to sell.
         </p>
       </div>
-      <div data-reveal style="--delay:.1s">
-        <Lifecycle stages={lifecycle as [string, string][]} />
-      </div>
+      <ShippingCycle phases={cycle} />
     </div>
   </section>
 

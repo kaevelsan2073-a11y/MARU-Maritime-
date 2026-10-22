@@ -8,7 +8,7 @@ const year = new Date().getFullYear();
       <div class="site-footer__brand">
         <img src="/brand/logo-seal.svg" alt="Maru Maritime seal" width="168" height="168" loading="lazy" />
         <p class="site-footer__name">{site.name}</p>
-        <p>{site.footerLine}</p>
+        <p class="site-footer__line">{site.footerLine.map((item, i) => <>{i > 0 && " "}<span>{item}</span></>)}</p>
       </div>
       <div class="site-footer__col">
         <h2>Company</h2>
@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
       <div class="site-footer__col">
         <h2>What we do</h2>
         <ul>
-          {site.footerServices.map((s, i) => <li><a href={`/services/#${site.serviceIds[i]}`}>{s}</a></li>)}
+          {site.services.map((s, i) => <li><a href={`/services/#${site.serviceIds[i]}`}>{s}</a></li>)}
         </ul>
       </div>
       <div class="site-footer__col">
@@ -73,6 +73,15 @@ const year = new Date().getFullYear();
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-on-dark);
+  }
+  /* Keep each item whole, so lines only break between items. */
+  .site-footer__line span {
+    white-space: nowrap;
+  }
+  .site-footer__line span:not(:last-child)::after {
+    content: "|";
+    margin-left: 0.5em;
+    color: var(--gold-500);
   }
   .site-footer__col h2 {
     margin-bottom: 22px;

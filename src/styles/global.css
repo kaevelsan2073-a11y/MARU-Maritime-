@@ -88,6 +88,7 @@ a {
 
 p {
   margin: 0 0 1.1em;
+  text-wrap: pretty;
 }
 
 h1,
@@ -99,6 +100,8 @@ h4 {
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.01em;
+  /* Even out heading lines so no word is left on its own. */
+  text-wrap: balance;
 }
 
 ::selection {
