@@ -7,7 +7,7 @@ export const site = {
   label: "Marine Asset Management",
   // Company description, as provided by Maru Maritime.
   description:
-    "Maru Maritime creates unique opportunities in ship owning, commercial, technical and comprehensive marine services throughout the life cycle of a ship.",
+    "Maru Maritime creates unique opportunities in ship owning, commercial, chartering and comprehensive marine services throughout the life cycle of a ship.",
   relationships:
     "Our deep relationships in Japan, Korea, India and China, and our presence in the United States, give us the unique advantage to bridge the gap efficiently between owners, operators and charterers.",
   // In order of priority.
