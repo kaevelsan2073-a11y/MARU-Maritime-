@@ -1,7 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import ShippingCycle from "../components/ShippingCycle.astro";
-import RelationshipMap from "../components/RelationshipMap.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
 import { site } from "../data/site";
@@ -62,7 +61,7 @@ const cycle = [
     <img class="hero__photo" src="/images/hero.jpg" alt="" fetchpriority="high" />
     <div class="hero__shade" aria-hidden="true"></div>
     <div class="container hero__inner">
-      <h1 class="display" data-reveal style="--delay:.08s">End-to-end asset management across the life of the ship</h1>
+      <h1 class="display" data-reveal style="--delay:.08s">End-to-end asset management across the life cycle of a ship</h1>
       <p class="lead" data-reveal style="--delay:.16s">{site.description}</p>
       <div class="hero__actions" data-reveal style="--delay:.24s">
         <a href="#what-we-do" class="btn btn--gold">What we do <Icon name="arrow" /></a>
@@ -80,14 +79,12 @@ const cycle = [
           {site.services.map((s, i) => (
             <li>
               <a href={`/services/#${site.serviceIds[i]}`}>
-                <span class="wwd__n">{String(i + 1).padStart(2, "0")}</span>
                 <span class="wwd__name">{s}</span>
                 <Icon name="arrow" class="wwd__arrow" />
               </a>
             </li>
           ))}
         </ol>
-        <p class="wwd__note">Throughout the life cycle of the ship.</p>
         <a href="/services/" class="text-link">All services <Icon name="arrow" /></a>
       </div>
       <figure class="wwd__photo" data-reveal style="--delay:.1s">
@@ -98,13 +95,21 @@ const cycle = [
 
   <!-- ============ BRIDGING THE GAP ============ -->
   <section class="section section--deep">
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <h2 class="h2">Bridging the gap between seller, buyer, operator and charterer</h2>
+    <div class="container gap">
+      <h2 class="h2" data-reveal>Bridging the gap between owners, operators and charterers</h2>
+      <div class="gap__body" data-reveal style="--delay:.1s">
         <p class="lead">{site.relationships}</p>
-      </div>
-      <div class="gap-map" data-reveal style="--delay:.1s">
-        <RelationshipMap />
+        <dl class="gap__facts">
+          <div>
+            <dt>Relationships</dt>
+            <dd>{site.relationshipRegions.join(" · ")}</dd>
+          </div>
+          <div>
+            <dt>Presence</dt>
+            <dd>{site.presence}</dd>
+          </div>
+        </dl>
+        <a href="/about/#relationships" class="text-link">See the map <Icon name="arrow" /></a>
       </div>
     </div>
   </section>
@@ -218,19 +223,10 @@ const cycle = [
     padding: 22px 0;
     border-bottom: 1px solid var(--line-light);
   }
-  .wwd__n {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--gold-600);
-  }
   .wwd__name {
     font-family: var(--font-display);
     font-size: clamp(30px, 3.2vw, 42px);
     line-height: 1.1;
-  }
-  .wwd__note {
-    margin: 24px 0 0;
-    color: var(--muted-on-light);
   }
   .wwd__photo {
     margin: 0;
@@ -267,13 +263,41 @@ const cycle = [
   }
 
   /* Bridging the gap */
-  .gap-map {
-    margin-top: 8px;
+  .gap {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .gap__body .lead {
+    margin: 0;
+  }
+  .gap__facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 36px 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--line-dark);
+  }
+  .gap__facts dt {
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-400);
+  }
+  .gap__facts dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2vw, 26px);
+    line-height: 1.25;
   }
 
   .wwd__list a {
     display: grid;
-    grid-template-columns: 56px 1fr 24px;
+    grid-template-columns: 1fr 24px;
     align-items: baseline;
     transition: padding 0.4s var(--ease), color 0.3s;
   }
@@ -287,8 +311,8 @@ const cycle = [
     align-self: center;
     color: var(--gold-600);
   }
-  .wwd__note + .text-link {
-    margin-top: 18px;
+  .wwd__list + .text-link {
+    margin-top: 28px;
   }
 
   /* Tagline band */
@@ -325,6 +349,7 @@ const cycle = [
       min-height: auto;
     }
     .wwd,
+    .gap,
     .principles {
       grid-template-columns: 1fr;
     }

@@ -9,11 +9,11 @@ export const site = {
   description:
     "Maru Maritime creates unique opportunities in ship owning, commercial, technical and comprehensive marine services throughout the life cycle of a ship.",
   relationships:
-    "Our deep relationships in Japan, Korea, India and China, and our presence in the United States, give us the unique advantage to bridge the gap efficiently between the buyer-seller and operator-charterer.",
+    "Our deep relationships in Japan, Korea, India and China, and our presence in the United States, give us the unique advantage to bridge the gap efficiently between owners, operators and charterers.",
   // In order of priority.
   services: ["Asset management", "Commercial management", "Chartering", "Marine services"],
   // Short line under the company name in the footer.
-  footerLine: ["Ship owning", "Commercial", "Technical", "Comprehensive Marine Services"],
+  footerLine: ["Ship owning", "Commercial", "Marine Services"],
   // Anchors on the Services page, matching the order above.
   serviceIds: ["asset-management", "commercial-management", "chartering", "marine-services"],
   relationshipRegions: ["Japan", "Korea", "India", "China"],

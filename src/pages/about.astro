@@ -25,10 +25,9 @@ const values = [
       <div class="about__text" data-reveal>
         <h2 class="h2">Who we are</h2>
         <p class="lead">
-          We are an experienced team of former Master Mariners and Engineers who have held corporate
-          leadership roles, working to generate value in the niche private maritime sector.
+          We are a team of experienced master mariners and engineers who have held corporate leadership
+          roles, working to generate value in the niche private maritime sector.
         </p>
-        <p class="lead">{site.relationships}</p>
       </div>
       <figure class="about__seal" data-reveal style="--delay:.1s">
         <img src="/brand/maru-seal-dark.png" alt="Maru Maritime seal: Anchored in Trust, Driven by Excellence" width="1000" height="1000" loading="lazy" />
@@ -76,21 +75,15 @@ const values = [
   </section>
 
   <!-- Relationships and presence -->
-  <section class="section section--deep divider-top">
+  <section class="section section--deep divider-top" id="relationships">
     <div class="container">
       <div class="section-head" data-reveal>
         <h2 class="h2">Relationships and presence</h2>
+        <p class="lead">{site.relationships}</p>
       </div>
       <div data-reveal style="--delay:.1s">
         <RelationshipMap />
       </div>
-    </div>
-  </section>
-
-  <!-- Tagline -->
-  <section class="section section--dark divider-top tagline">
-    <div class="container" data-reveal>
-      <p class="tagline__text">Anchored in Trust. <span class="gold-text">Driven by Excellence.</span></p>
     </div>
   </section>
 
@@ -148,15 +141,6 @@ const values = [
     font-size: 15.5px;
   }
 
-  .tagline {
-    text-align: center;
-  }
-  .tagline__text {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(36px, 4.6vw, 60px);
-    line-height: 1.15;
-  }
   @media (max-width: 1080px) {
     .values {
       grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -3,13 +3,12 @@ import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
-import { site } from "../data/site";
 
 const services = [
   {
     id: "asset-management",
     icon: "asset",
-    kicker: "Throughout the life cycle of the ship",
+    kicker: "From purchase to sale",
     title: "Asset Management",
     intro:
       "A ship is an investment and a working asset. We create opportunities in ship owning and manage vessels end to end: buying opportunities, finance comparison, commercial fixing, and oversight of the technical manager, ensuring the vessel is kept in good condition to maximize its sale value.",
@@ -80,7 +79,7 @@ const services = [
 ---
 
 <Base title="Services" description="Asset management, commercial management, chartering and marine services from Maru Maritime.">
-  <PageHero eyebrow="Services" title="What we do" lead={site.description} image="/images/band.jpg" imagePosition="60% 50%">
+  <PageHero eyebrow="Services" title="What we do" lead="Asset management, commercial management, chartering and marine services, handled by one team throughout the life cycle of a ship." image="/images/band.jpg" imagePosition="60% 50%">
     <nav class="jump" aria-label="Services on this page" data-reveal style="--delay:.24s">
       {services.map((s) => (
         <a href={`#${s.id}`}><Icon name={s.icon} />{s.title}</a>
