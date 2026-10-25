@@ -93,29 +93,8 @@ const cycle = [
     </div>
   </section>
 
-  <!-- ============ BRIDGING THE GAP ============ -->
-  <section class="section section--deep">
-    <div class="container gap">
-      <h2 class="h2" data-reveal>Bridging the gap between owners, operators and charterers</h2>
-      <div class="gap__body" data-reveal style="--delay:.1s">
-        <p class="lead">{site.relationships}</p>
-        <dl class="gap__facts">
-          <div>
-            <dt>Relationships</dt>
-            <dd>{site.relationshipRegions.join(" · ")}</dd>
-          </div>
-          <div>
-            <dt>Presence</dt>
-            <dd>{site.presence}</dd>
-          </div>
-        </dl>
-        <a href="/about/#relationships" class="text-link">See the map <Icon name="arrow" /></a>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ SHIPPING CYCLE ============ -->
-  <section class="section section--light">
+  <section class="section section--light cycle-section">
     <div class="container">
       <div class="section-head section-head--center" data-reveal>
         <h2 class="h2">The shipping cycle</h2>
@@ -262,38 +241,6 @@ const cycle = [
     margin: 0;
   }
 
-  /* Bridging the gap */
-  .gap {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: clamp(32px, 6vw, 96px);
-    align-items: start;
-  }
-  .gap__body .lead {
-    margin: 0;
-  }
-  .gap__facts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin: 36px 0;
-    padding-top: 28px;
-    border-top: 1px solid var(--line-dark);
-  }
-  .gap__facts dt {
-    margin-bottom: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--gold-400);
-  }
-  .gap__facts dd {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 26px);
-    line-height: 1.25;
-  }
 
   .wwd__list a {
     display: grid;
@@ -313,6 +260,11 @@ const cycle = [
   }
   .wwd__list + .text-link {
     margin-top: 28px;
+  }
+
+  /* Shipping cycle follows another light section, so mark the break with a hairline. */
+  .cycle-section {
+    border-top: 1px solid var(--line-light);
   }
 
   /* Tagline band */
@@ -349,7 +301,6 @@ const cycle = [
       min-height: auto;
     }
     .wwd,
-    .gap,
     .principles {
       grid-template-columns: 1fr;
     }
